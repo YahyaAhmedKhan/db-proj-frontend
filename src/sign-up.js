@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -40,12 +41,16 @@ const SignUp = () => {
           <a href="#pricing" className="mx-2 text-gray-800 no-underline">
             Price Info
           </a>
-          <button className="button signup-button mx-1 border border-blue-700 rounded-md text-blue-700 px-4 py-2">
-            Sign Up
-          </button>
-          <button className="button login-button mx-1 border border-gray-600 rounded-md text-gray-600 px-4 py-2">
-            Login
-          </button>
+          <Link to="/signup" className=" mx-1">
+            <button className="button signup-button mx-1 border border-blue-700 rounded-md text-blue-700 px-4 py-2">
+              Sign Up
+            </button>
+          </Link>
+          <Link to="/login" className="mx-1">
+            <button className="button login-button mx-1 border border-gray-600 rounded-md text-gray-600 px-4 py-2">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
 
