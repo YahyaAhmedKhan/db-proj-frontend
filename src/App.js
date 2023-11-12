@@ -1,7 +1,7 @@
 import "./App.css";
-import Flights from "./flights";
+import { FlightsPage } from "./flights-page";
 import Login from "./login";
-import SignUp from "./sign-up";
+import SignUp from "./sign-up-page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/flights" element={<Flights />} />
+        <Route path="/flights" element={<FlightsPage />} />
       </Routes>
     </BrowserRouter>
   );
