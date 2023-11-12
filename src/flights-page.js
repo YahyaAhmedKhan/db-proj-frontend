@@ -26,20 +26,36 @@ export const FlightsPage = () => {
     <div className="flex flex-col items-center justify-center">
       <Navbar />
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-5xl mb-4 font-bold pt-10">Search for flights</h1>
+        <h1 className="text-5xl mb-4 font-bold pt-14">Search for flights</h1>
         <p
-          className=" w-1/2 text-center text-lg font-medium leading-6"
+          className=" w-1/2 text-center text-lg font-medium leading- pb-8"
           style={{ width: "45%" }}
         >
           Search for the flight you want by specifying the origin and
           destination, and which day you'd like to fly. Then you can select the
           flight you want and proceed to the booking procedure.
         </p>
-        <div className=" flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between">
-          <div className="w-[26%] h-[50%] bg-white rounded-xl"></div>
-          <div className="w-[26%] h-[50%] bg-white rounded-xl"></div>
-          <div className="w-[20%] h-[50%] bg-white rounded-xl"></div>
-          <div className="w-[20%] h-[50%] bg-white rounded-xl"></div>
+        <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between ">
+          <input
+            type="text"
+            className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            placeholder="Select Origin"
+          />
+          <input
+            type="text"
+            className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            placeholder="Select Destination"
+          />
+          <input
+            type="date"
+            className=" text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+          />
+          <button
+            type="button"
+            className=" text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+          >
+            Search
+          </button>
         </div>
 
         <div className="flight-results w-3/4 flex flex-col mt-6 bg-gray-200 px-[2%]">
@@ -115,7 +131,6 @@ export const FlightsPage = () => {
                       </td>
                       <td className="font-extrabold pl-10">{flight.price}</td>
                     </tr>
-                    
                   </>
                 );
               })}
