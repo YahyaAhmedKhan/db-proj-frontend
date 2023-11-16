@@ -12,8 +12,8 @@ export const FlightsPage = ({ isLoggedIn }) => {
   function timeDifference(time1, time2) {
     // Function to convert time string to minutes
     function timeToMinutes(time) {
-        const [hours, minutes] = time.split(':').map(Number);
-        return hours * 60 + minutes;
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
     }
 
     // Convert both times to minutes
@@ -28,9 +28,7 @@ export const FlightsPage = ({ isLoggedIn }) => {
     const minutes = diff % 60;
 
     return `${hours}hr ${minutes}mins`;
-}
-
-
+  }
 
   // useEffect(() => {
   // Check for the presence of the cookie
@@ -99,9 +97,8 @@ export const FlightsPage = ({ isLoggedIn }) => {
         <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between ">
           <input
             type="text"
-            className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
-            // className="text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border-blue-500 transition duration-300"
-
+            // className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
             placeholder="Select Origin"
             value={origin}
             onChange={(e) => {
@@ -110,7 +107,8 @@ export const FlightsPage = ({ isLoggedIn }) => {
           />
           <input
             type="text"
-            className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500 "
+            // className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
             placeholder="Select Destination"
             value={destination}
             onChange={(e) => {
@@ -119,7 +117,8 @@ export const FlightsPage = ({ isLoggedIn }) => {
           />
           <input
             type="date"
-            className=" text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
+            // className=" text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
@@ -127,7 +126,8 @@ export const FlightsPage = ({ isLoggedIn }) => {
           />
           <button
             type="button"
-            className=" text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            // className=" text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 transform hover:scale-105 transition duration-50 cursor-pointer"
             onClick={handleSearch}
           >
             Search
@@ -135,7 +135,7 @@ export const FlightsPage = ({ isLoggedIn }) => {
         </div>
 
         <div className="flight-results w-3/4 flex flex-col mt-6 bg-gray-200 px-[2%]">
-          <table className="flights-table w-full  h-full mt-3  mb-5 border-separate border-spacing-y-3">
+          <table className="flights-table w-full  h-full mt-3  mb-5 border-separate border-spacing-y-3 ">
             <thead>
               <tr className="text-center underline">
                 <th className="pb-3 font-medium">Flight Code</th>
@@ -146,38 +146,54 @@ export const FlightsPage = ({ isLoggedIn }) => {
                 <th className="pb-3 pl-10 font-medium">Price</th>
               </tr>
             </thead>
-            <tbody className=" font-medium">
-              {flightResults.map((flight) => {
-                const duration = timeDifference(flight.arrival_time, flight.dep_time);
-                console.log("Duration:", duration);
-                // console.log("arrival time:", flight.arrival_time);
-                console.log(timeDifference("22:15:00", "00:30:00")); // Outputs the time difference
-                console.log(flight.arrival_time)
+            {flightResults.length > 0 ? (
+              <tbody className=" font-medium">
+                {flightResults.map((flight) => {
+                  const duration = timeDifference(
+                    flight.arrival_time,
+                    flight.dep_time
+                  );
+                  console.log("Duration:", duration);
+                  // console.log("arrival time:", flight.arrival_time);
+                  console.log(timeDifference("22:15:00", "00:30:00")); // Outputs the time difference
+                  console.log(flight.arrival_time);
 
-                return (
-                  <tr className=" text-center bg-white" key={flight.flight_id}>
-                    <td className="py-5">{flight.flight_id}</td>
-                    <td className="font-extrabold py-5">
-                    {flight.origin} - {flight.dep_time}
-
-                    </td>
-                    <td className="font-extrabold py-5">
-                    {duration}
-
-                    </td>
-                    <td className="font-extrabold py-5">
-                      {flight.destination} - {flight.arrival_time}
-                    </td>
-                    <td className="font-extrabold py-5">
-                      {flight.total_passengers}
-                    </td>
-                    <td className="font-extrabold pl-10">
-                      {flight.base_price}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+                  return (
+                    <tr
+                      // className=" text-center bg-white"
+                      className="text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer"
+                      key={flight.flight_id}
+                      title="Click to book this flight"
+                    >
+                      <td className="py-5 rounded-l-lg">{flight.flight_id}</td>
+                      <td className="font-extrabold py-5">
+                        {flight.origin} - {flight.dep_time}
+                      </td>
+                      <td className="font-extrabold py-5">{duration}</td>
+                      <td className="font-extrabold py-5">
+                        {flight.destination} - {flight.arrival_time}
+                      </td>
+                      <td className="font-extrabold py-5">
+                        {flight.total_passengers}
+                      </td>
+                      <td className="font-extrabold pl-10 rounded-r-lg">
+                        {flight.base_price}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            ) : (
+              <tbody>
+                <tr>
+                  <td colSpan="6" className="text-center py-5">
+                    <p className="text-lg font-semibold text-gray-700">
+                      No flights found
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            )}
           </table>
         </div>
         {/* <p className="m-16 relative group">
