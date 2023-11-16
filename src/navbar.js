@@ -4,15 +4,16 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Navbar({ isLoggedIn }) {
+function Navbar({ isLoggedIn, setIsLoggedIn }) {
+  useEffect(() => {}, [isLoggedIn]);
 
-  // console.log("isLoggedIn:", isLoggedIn);
-  // useEffect(() => {
-  //   console.log("isLoggedIn:", isLoggedIn);
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    console.log("isLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     Cookies.remove("jwtToken", { path: "/" });
+    setIsLoggedIn(false);
   };
 
   return (

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../navbar";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faCircleUser,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
+import { backendURL } from "../constants";
 
-const Login = ({ isLoggedIn }) => {
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +15,7 @@ const Login = ({ isLoggedIn }) => {
 
   const handleSubmit = async (values) => {
     values.preventDefault();
-    const response = await axios.post("http://localhost:5000/login", {
+    const response = await axios.post(`${backendURL}login`, {
       email: email,
       password: password,
     });
@@ -33,11 +28,12 @@ const Login = ({ isLoggedIn }) => {
       // secure: process.env.NODE_ENV === "production",
       sameSite: "Lax",
     });
+    setIsLoggedIn(true);
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} > </Navbar>
       <div className="main-content text-center mt-8">
         <div className="welcome-text">
           <h1 className="text-5xl mb-4 font-bold">

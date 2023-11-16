@@ -23,8 +23,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} />} />
-        <Route path="/login" element={<Login isLoggedIn={isLoggedIn} />} />
+        <Route
+          path="/signup"
+          element={
+            <SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          }
+        />
         <Route
           path="/flights"
           element={<FlightsPage isLoggedIn={isLoggedIn} />}

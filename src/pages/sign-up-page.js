@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "../navbar";
+import { backendURL } from "../constants";
 
-const SignUp = ({ isLoggedIn }) => {
+const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -12,7 +13,7 @@ const SignUp = ({ isLoggedIn }) => {
     console.log(values.target);
     console.log(values.target.values);
     values.preventDefault();
-    const response = await axios.post("http://localhost:5000/accounts", {
+    const response = await axios.post(`${backendURL}accounts`, {
       email: email,
       password: password,
     });
@@ -23,7 +24,9 @@ const SignUp = ({ isLoggedIn }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+        {" "}
+      </Navbar>
 
       <div className="main-content text-center mt-8">
         <div className="welcome-text">
@@ -56,8 +59,8 @@ const SignUp = ({ isLoggedIn }) => {
             <input
               type="password"
               placeholder="Confirm password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="mb-4 p-2 border border-gray-300 rounded-md"
             />
             <button

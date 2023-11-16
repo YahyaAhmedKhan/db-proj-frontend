@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../navbar";
 import FlightRow from "../flight-row";
+import { backendURL } from "../constants";
 
-export const FlightsPage = ({ isLoggedIn }) => {
+export const FlightsPage = ({ isLoggedIn, setIsLoggedIn }) => {
   const [origin, setOrigin] = useState("Karachi");
   const [destination, setDestination] = useState("Dubai");
   const [date, setDate] = useState("");
@@ -17,9 +18,7 @@ export const FlightsPage = ({ isLoggedIn }) => {
         destination,
         date: formattedDate,
       }).toString();
-      const response = await axios.post(
-        `http://localhost:5000/flights?${queryParams}`
-      );
+      const response = await axios.post(`${backendURL}flights?${queryParams}`);
 
       if (response.status === 200) {
         const flightDataArray = response.data.map((flight) => ({
@@ -53,7 +52,9 @@ export const FlightsPage = ({ isLoggedIn }) => {
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+        {" "}
+      </Navbar>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl mb-4 font-bold pt-14">Search for flights</h1>
         <p
