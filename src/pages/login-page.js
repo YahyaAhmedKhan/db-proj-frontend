@@ -1,30 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Navbar from "../navbar";
 import axios from "axios";
-import Navbar from "./navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCaretDown,
+  faCircleUser,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+import Cookies from "js-cookie";
 
-const SignUp = () => {
+const Login = ({ isLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    console.log(values.target);
-    console.log(values.target.values);
     values.preventDefault();
-    const response = await axios.post("http://localhost:5000/accounts", {
+    const response = await axios.post("http://localhost:5000/login", {
       email: email,
       password: password,
     });
-    console.log(response.data);
+    const { message, token } = response.data;
 
-    console.log("Submitted", { email, password });
+    console.log("message:", message, " token:", token);
+    Cookies.set("jwtToken", token, {
+      expires: 1 / 24, // 1 hr
+      path: "/",
+      // secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar />
-
+      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
       <div className="main-content text-center mt-8">
         <div className="welcome-text">
           <h1 className="text-5xl mb-4 font-bold">
@@ -33,12 +46,9 @@ const SignUp = () => {
         </div>
         <div className="signup-form inline-block mt-8 p-8 bg-gray-100 border border-gray-300 rounded-md">
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch">
-            <div className=" max-w-xs">
-              <h2 className="mb-6 font-bold text-2xl">
-                Create an account to make your first booking!
-              </h2>
-            </div>
-
+            <h2 className="mb-6 font-bold text-2xl">
+              Welcome back! <br /> Please login to your account.
+            </h2>
             <input
               type="email"
               placeholder="Enter email"
@@ -47,24 +57,20 @@ const SignUp = () => {
               className="mb-4 p-2 border border-gray-300 rounded-md"
             />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mb-4 p-2 border border-gray-300 rounded-md"
             />
-            <input
-              type="password"
-              placeholder="Confirm password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mb-4 p-2 border border-gray-300 rounded-md"
-            />
+            {/* <p className=" cursor-pointer" onClick={toggleShowPassword}>
+              show
+            </p> */}
             <button
               type="submit"
               className="button create-account-button py-2 border-none bg-blue-600 text-white"
             >
-              Create Account
+              Login
             </button>
           </form>
         </div>
@@ -73,4 +79,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

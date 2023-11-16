@@ -1,30 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "./navbar";
-import FlightRow from "./flight-row";
+import Navbar from "../navbar";
+import FlightRow from "../flight-row";
 
-export const FlightsPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = async (values) => {
-    console.log(values);
-    console.log(values.target);
-    console.log(values.target.values);
-    values.preventDefault();
-    const response = await axios.post("http://localhost:5000/accounts", {
-      email: email,
-      password: password,
-    });
-    console.log(response.data);
-
-    console.log("Submitted", { email, password });
-  };
-
+export const FlightsPage = ({ isLoggedIn }) => {
+  useEffect(() => {
+    // Check for the presence of the cookie
+    const isLoggedIn = document.cookie.includes("jwt");
+    if (isLoggedIn) {
+      console.log("User is logged in!");
+    } else {
+      console.log("User is not logged in!");
+    }
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl mb-4 font-bold pt-14">Search for flights</h1>
         <p

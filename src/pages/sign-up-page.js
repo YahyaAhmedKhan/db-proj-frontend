@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import Navbar from "./navbar";
+import axios from "axios";
+import Navbar from "../navbar";
 
-const Login = () => {
+const SignUp = ({ isLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
+    console.log(values);
+    console.log(values.target);
+    console.log(values.target.values);
+    values.preventDefault();
+    const response = await axios.post("http://localhost:5000/accounts", {
+      email: email,
+      password: password,
+    });
+    console.log(response.data);
+
     console.log("Submitted", { email, password });
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar></Navbar>
+      <Navbar isLoggedIn={isLoggedIn}> </Navbar>
+
       <div className="main-content text-center mt-8">
         <div className="welcome-text">
           <h1 className="text-5xl mb-4 font-bold">
@@ -21,9 +33,12 @@ const Login = () => {
         </div>
         <div className="signup-form inline-block mt-8 p-8 bg-gray-100 border border-gray-300 rounded-md">
           <form onSubmit={handleSubmit} className="flex flex-col items-stretch">
-            <h2 className="mb-6 font-bold text-2xl">
-              Welcome back! <br /> Please login to your account.
-            </h2>
+            <div className=" max-w-xs">
+              <h2 className="mb-6 font-bold text-2xl">
+                Create an account to make your first booking!
+              </h2>
+            </div>
+
             <input
               type="email"
               placeholder="Enter email"
@@ -38,11 +53,18 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="mb-4 p-2 border border-gray-300 rounded-md"
             />
+            <input
+              type="password"
+              placeholder="Confirm password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mb-4 p-2 border border-gray-300 rounded-md"
+            />
             <button
               type="submit"
               className="button create-account-button py-2 border-none bg-blue-600 text-white"
             >
-              Login
+              Create Account
             </button>
           </form>
         </div>
@@ -51,4 +73,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
