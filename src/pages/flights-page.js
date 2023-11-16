@@ -9,36 +9,6 @@ export const FlightsPage = ({ isLoggedIn }) => {
   const [date, setDate] = useState("");
   const [flightResults, setFlightResults] = useState([]);
 
-  function timeDifference(time1, time2) {
-    // Function to convert time string to minutes
-    function timeToMinutes(time) {
-      const [hours, minutes] = time.split(":").map(Number);
-      return hours * 60 + minutes;
-    }
-
-    // Convert both times to minutes
-    const minutes1 = timeToMinutes(time1);
-    const minutes2 = timeToMinutes(time2);
-
-    // Calculate the difference in minutes
-    let diff = Math.abs(minutes2 - minutes1);
-
-    // Convert the difference back to hours and minutes
-    const hours = Math.floor(diff / 60);
-    const minutes = diff % 60;
-
-    return `${hours}hr ${minutes}mins`;
-  }
-
-  // useEffect(() => {
-  // Check for the presence of the cookie
-  //   const isLoggedIn = document.cookie.includes("jwt");
-  //   if (isLoggedIn) {
-  //     console.log("User is logged in!");
-  //   } else {
-  //     console.log("User is not logged in!");
-  //   }
-  // }, []);
   const handleSearch = async () => {
     try {
       const formattedDate = convertDateFormat(date); // Convert date format
@@ -206,3 +176,24 @@ export const FlightsPage = ({ isLoggedIn }) => {
     </div>
   );
 };
+
+function timeDifference(time1, time2) {
+  // Function to convert time string to minutes
+  function timeToMinutes(time) {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  }
+
+  // Convert both times to minutes
+  const minutes1 = timeToMinutes(time1);
+  const minutes2 = timeToMinutes(time2);
+
+  // Calculate the difference in minutes
+  let diff = Math.abs(minutes2 - minutes1);
+
+  // Convert the difference back to hours and minutes
+  const hours = Math.floor(diff / 60);
+  const minutes = diff % 60;
+
+  return `${hours}hr ${minutes}mins`;
+}

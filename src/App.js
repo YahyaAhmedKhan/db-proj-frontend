@@ -3,7 +3,7 @@ import "./App.css";
 import { FlightsPage } from "./pages/flights-page";
 import Login from "./pages/login-page";
 import SignUp from "./pages/sign-up-page";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
           path="/flights"
           element={<FlightsPage isLoggedIn={isLoggedIn} />}
         />
+        <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );
