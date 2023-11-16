@@ -14,10 +14,10 @@ function App() {
 
     if (token) {
       setIsLoggedIn(true);
-      console.log("User is logged in!");
+      // console.log("User is logged in!");
     } else {
       setIsLoggedIn(false);
-      console.log("User is not logged in!");
+      // console.log("User is not logged in!");
     }
   }, [isLoggedIn]);
   return (

@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar({ isLoggedIn }) {
-  console.log("isLoggedIn:", isLoggedIn);
-  useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn);
-  }, [isLoggedIn]);
+
+  // console.log("isLoggedIn:", isLoggedIn);
+  // useEffect(() => {
+  //   console.log("isLoggedIn:", isLoggedIn);
+  // }, [isLoggedIn]);
 
   const handleLogout = () => {
     Cookies.remove("jwtToken", { path: "/" });
@@ -22,21 +23,37 @@ function Navbar({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className="navbar-menu flex items-center font-semibold">
-        <a href="#home" className="mx-2 text-gray-800 no-underline">
+      <div className="navbar-menu flex items-center font-semibold ">
+        <a
+          href="#home"
+          className="mx-2 text-gray-800 no-underline hover:text-blue-600 "
+        >
           Home
         </a>
-        <a href="#experience" className="mx-2 text-gray-800 no-underline">
+
+        <a
+          href="#experience"
+          className="mx-2 text-gray-800 no-underline hover:text-blue-600"
+        >
           The Khan Experience
         </a>
-        <a href="#luggage" className="mx-2 text-gray-800 no-underline">
+        <a
+          href="#luggage"
+          className="mx-2 text-gray-800 no-underline hover:text-blue-600"
+        >
           Luggage Policy
         </a>
-        <a href="#pricing" className="mx-2 text-gray-800 no-underline">
+        <a
+          href="#pricing"
+          className="mx-2 text-gray-800 no-underline hover:text-blue-600"
+        >
           Price Info
         </a>
         <Link to="/flights">
-          <p className="mx-2 text-gray-800 no-underline"> Flights</p>
+          <p className="mx-2 text-gray-800 no-underline hover:text-blue-600">
+            {" "}
+            Flights
+          </p>
         </Link>
         {!isLoggedIn ? (
           <>
@@ -53,9 +70,8 @@ function Navbar({ isLoggedIn }) {
           </>
         ) : (
           <div
-            className=" ml-8 flex flex-row justify-between items-center hover:bg-gray-200 rounded-md px-2 py-1 gap-2"
+            className=" ml-8 flex flex-row justify-between items-center hover:bg-gray-200 rounded-md px-2 py-1 gap-2 hover:cursor-pointer "
             onClick={handleLogout}
-
           >
             <FontAwesomeIcon className="" icon={faCaretDown} />
             <FontAwesomeIcon icon={faCircleUser} />
