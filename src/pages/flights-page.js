@@ -13,7 +13,7 @@ export const FlightsPage = () => {
   const navigate = useNavigate();
 
   const handleFlightClick = (flightId) => {
-    navigate(`/booking/${flightId}`);
+    navigate(`/booking/${flightId}/${date}`);
   };
 
   const handleSearch = async () => {
