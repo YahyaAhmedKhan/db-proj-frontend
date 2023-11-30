@@ -3,7 +3,6 @@ import Navbar from "../navbar";
 import { useParams } from "react-router-dom";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { Axios } from "axios";
 import axiosInstance from "../axiosConfig";
 
 export const BookingPage = () => {
@@ -11,14 +10,17 @@ export const BookingPage = () => {
   console.log("flightId:", flightId);
   const [seats, setSeats] = useState(0);
   const [price, setPrice] = useState(0);
-
+  let flight = null;
+  
   useEffect(() => {
     axiosInstance
-      .get(`flights/${flightId}`)
+      .post(`flights/${flightId}`)
       .then((response) => {
-        const { data } = response;
-        const { base_price } = data;
+        flight = response.data;
+        const { base_price } = flight;
         setPrice(base_price);
+
+        console.log("Flight details:", flight);
       })
       .catch((error) => {
         console.error("Error fetching flight details:", error);
