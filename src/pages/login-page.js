@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../navbar";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { backendURL } from "../constants";
-import { loginUser, logoutUser } from "../actions/actions";
+import { loginUser } from "../actions/actions";
 import { connect } from "react-redux";
 
 const Login = ({ loginUser }) => {
@@ -21,9 +21,20 @@ const Login = ({ loginUser }) => {
       email: email,
       password: password,
     });
-    const { message, token } = response.data;
 
-    console.log("message:", message, " token:", token);
+    const { message, token } = response.data;
+    const emailRes = response.data.email;
+
+    console.log(
+      "message:",
+      message,
+      " token:",
+      token,
+      "email:",
+      emailRes,
+      "password:",
+      password
+    );
     Cookies.set("jwtToken", token, {
       expires: 1 / 24, // 1 hr
       path: "/",
@@ -31,7 +42,7 @@ const Login = ({ loginUser }) => {
       sameSite: "Lax",
     });
     // setIsLoggedIn(true);
-    loginUser(token);
+    loginUser({ token, emailRes, password });
   };
 
   return (
@@ -78,9 +89,10 @@ const Login = ({ loginUser }) => {
   );
 };
 
-// Map Redux state to component props
+// // Map Redux state to component props
 const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn, // This is probably not needed in this component anymore
+
 });
 
 // Map Redux actions to component props
@@ -88,4 +100,4 @@ const mapDispatchToProps = {
   loginUser, // This should be an action creator that dispatches login action
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps ,mapDispatchToProps)(Login);

@@ -6,14 +6,15 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "./actions/actions"; // Ensure this is the correct path to your action creators
 
-function Navbar({ isLoggedIn, logoutUser }) {
-  useEffect(() => {}, [isLoggedIn]);
+function Navbar({ isLoggedIn, logoutUser, user }) {
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
+    console.log("user:", user);
   }, [isLoggedIn]);
 
   const handleLogout = () => {
+    // console.log("Logging out...");
     Cookies.remove("jwtToken", { path: "/" });
     logoutUser(); // Dispatch the logout action to the Redux store
   };
@@ -78,7 +79,7 @@ function Navbar({ isLoggedIn, logoutUser }) {
           >
             <FontAwesomeIcon className="" icon={faCaretDown} />
             <FontAwesomeIcon icon={faCircleUser} />
-            <p className=" text-xl font-bold ">Yahya Ahmed</p>{" "}
+            <p className=" text-xl font-bold ">{user.emailRes} </p>{" "}
           </div>
         )}
       </div>
@@ -90,6 +91,7 @@ function Navbar({ isLoggedIn, logoutUser }) {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn, // Make sure the state path matches your Redux setup
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = {

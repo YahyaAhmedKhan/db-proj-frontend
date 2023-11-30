@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../navbar";
 import { backendURL } from "../constants";
 
-const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,9 +24,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
-        {" "}
-      </Navbar>
+      <Navbar> </Navbar>
 
       <div className="main-content text-center mt-8">
         <div className="welcome-text">

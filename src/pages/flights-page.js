@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "../navbar";
-import FlightRow from "../flight-row";
 import { backendURL } from "../constants";
+import { useNavigate } from "react-router-dom";
 
-
-export const FlightsPage = ({ isLoggedIn, setIsLoggedIn }) => {
+export const FlightsPage = () => {
   const [origin, setOrigin] = useState("Karachi");
   const [destination, setDestination] = useState("Dubai");
   const [date, setDate] = useState("");
   const [flightResults, setFlightResults] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleFlightClick = (flightId) => {
+    navigate(`/booking/${flightId}`);
+  };
 
   const handleSearch = async () => {
     try {
@@ -53,9 +58,7 @@ export const FlightsPage = ({ isLoggedIn, setIsLoggedIn }) => {
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
-        {" "}
-      </Navbar>
+      <Navbar> </Navbar>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl mb-4 font-bold pt-14">Search for flights</h1>
         <p
@@ -133,9 +136,10 @@ export const FlightsPage = ({ isLoggedIn, setIsLoggedIn }) => {
                   return (
                     <tr
                       // className=" text-center bg-white"
-                      className="text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer"
+                      className="flightRow text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer"
                       key={flight.flight_id}
                       title="Click to book this flight"
+                      onClick={() => handleFlightClick(flight.flight_id)}
                     >
                       <td className="py-5 rounded-l-lg">{flight.flight_id}</td>
                       <td className="font-extrabold py-5">
