@@ -4,6 +4,7 @@ import Navbar from "../navbar";
 import FlightRow from "../flight-row";
 import { backendURL } from "../constants";
 
+
 export const FlightsPage = ({ isLoggedIn, setIsLoggedIn }) => {
   const [origin, setOrigin] = useState("Karachi");
   const [destination, setDestination] = useState("Dubai");

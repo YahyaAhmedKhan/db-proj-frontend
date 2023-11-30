@@ -3,8 +3,10 @@ import Navbar from "../navbar";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { backendURL } from "../constants";
+import { loginUser, logoutUser } from "../actions/actions";
+import { connect } from "react-redux";
 
-const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+const Login = ({ loginUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,12 +30,13 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       // secure: process.env.NODE_ENV === "production",
       sameSite: "Lax",
     });
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
+    loginUser(token);
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} > </Navbar>
+      <Navbar> </Navbar>
       <div className="main-content text-center mt-8">
         <div className="welcome-text">
           <h1 className="text-5xl mb-4 font-bold">
@@ -75,4 +78,14 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   );
 };
 
-export default Login;
+// Map Redux state to component props
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn, // This is probably not needed in this component anymore
+});
+
+// Map Redux actions to component props
+const mapDispatchToProps = {
+  loginUser, // This should be an action creator that dispatches login action
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

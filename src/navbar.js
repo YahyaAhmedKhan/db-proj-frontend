@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "./actions/actions"; // Ensure this is the correct path to your action creators
 
-function Navbar({ isLoggedIn, setIsLoggedIn }) {
+function Navbar({ isLoggedIn, logoutUser }) {
   useEffect(() => {}, [isLoggedIn]);
 
   useEffect(() => {
@@ -13,7 +15,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
   const handleLogout = () => {
     Cookies.remove("jwtToken", { path: "/" });
-    setIsLoggedIn(false);
+    logoutUser(); // Dispatch the logout action to the Redux store
   };
 
   return (
@@ -84,4 +86,14 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
   );
 }
 
-export default Navbar;
+// export default Navbar;
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn, // Make sure the state path matches your Redux setup
+});
+
+const mapDispatchToProps = {
+  logoutUser, // Make sure logoutUser is an action creator that dispatches the logout action
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
