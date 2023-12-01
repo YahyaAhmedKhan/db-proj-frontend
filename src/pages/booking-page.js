@@ -159,17 +159,11 @@ const BookingForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit logic here
-    console.log(passengerDetails);
-  };
-
   return (
     <div className="w-full mb-10">
       <form
-        onSubmit={handleSubmit}
-        className=" bg-gray-200 px-64 pt-10 pb-8 mb-4"
+        // onSubmit={handleSubmit}
+        className="bg-gray-200 px-48 py-6 rounded-lg"
       >
         <div className="form-info-top justify-between flex">
           <h2 className="text-3xl mb-4 font-bold">Passenger 1 Details</h2>
@@ -180,14 +174,14 @@ const BookingForm = () => {
             </p>
           </div>
         </div>
-
-        <div className="form-first-row flex gap-5 mb-5">
-          <div className="flex flex-col flex-grow">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {/* First Name */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
               First Name
             </label>
             <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               type="text"
               name="firstName"
               value={passengerDetails.firstName}
@@ -195,52 +189,13 @@ const BookingForm = () => {
             />
           </div>
 
-          <div className="flex flex-col flex-grow">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+          {/* Last Name */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
               Last Name
             </label>
             <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="firstName"
-              value={passengerDetails.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="flex flex-col flex-grow">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Date of birth
-            </label>
-            <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="firstName"
-              value={passengerDetails.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="form-second-row flex gap-5">
-          <div className="flex flex-col flex-grow-[60]">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Passport Number
-            </label>
-            <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="firstName"
-              value={passengerDetails.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="flex flex-col flex-grow-[30]">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Nationality
-            </label>
-            <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               type="text"
               name="lastName"
               value={passengerDetails.lastName}
@@ -248,12 +203,13 @@ const BookingForm = () => {
             />
           </div>
 
-          <div className="flex flex-col flex-grow-[20]">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Gender
+          {/* Date of Birth */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Date of Birth
             </label>
             <input
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               type="text"
               name="dateOfBirth"
               value={passengerDetails.dateOfBirth}
@@ -261,13 +217,70 @@ const BookingForm = () => {
             />
           </div>
         </div>
-        {/* <div className="form-third-row flex gap-5">
-          <div className="flex flex-col flex-grow-40">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Seat Class:
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {/* Passport Number */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Passport Number
+            </label>
+            <input
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="passportNumber"
+              value={passengerDetails.passportNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {/* Nationality */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Nationality
+            </label>
+            <input
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="nationality"
+              value={passengerDetails.nationality}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {/* Gender */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Gender
+            </label>
+            {/* <input
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="gender"
+              value={passengerDetails.gender}
+              onChange={handleInputChange}
+            /> */}
+            <select
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              name="gender"
+              value={passengerDetails.gender}
+              onChange={handleInputChange}
+            >
+              <option value="Economy">Male</option>
+              <option value="Business">Female</option>
+              <option value="First Class">Other</option>
+              <option value="Rather not say">Rather not say</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {/* Seat Class */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Seat Class
             </label>
             <select
-              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               name="seatClass"
               value={passengerDetails.seatClass}
               onChange={handleInputChange}
@@ -278,33 +291,35 @@ const BookingForm = () => {
             </select>
           </div>
 
-          <div className="flex flex-col flex-grow-25">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Special Needs:
+          {/* Special Needs */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Special Needs
             </label>
             <input
-              className="ml-2"
               type="checkbox"
               name="specialNeeds"
               checked={passengerDetails.specialNeeds}
-              // onChange={handleCheckboxChange}
+              onChange={handleInputChange}
             />
           </div>
 
-          <div className="flex flex-col flex-grow">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Extra Baggage Allowance:
+          {/* Extra Baggage Allowance */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 text-sm font-medium mb-1">
+              Extra Baggage Allowance
             </label>
             <input
-              className="ml-2"
               type="checkbox"
               name="extraBaggage"
               checked={passengerDetails.extraBaggage}
-              // onChange={handleCheckboxChange}
+              onChange={handleInputChange}
             />
           </div>
-        </div> */}
+        </div>
       </form>
     </div>
   );
 };
+
+export default BookingForm;
