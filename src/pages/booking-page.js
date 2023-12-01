@@ -55,7 +55,7 @@ export const BookingPage = () => {
           Please select the number of passengers in your booking (max 9) and
           fill in their respective details.
         </p>
-        <div className="h-24 w-screen bg-slate-300 flex justify-center items-center">
+        <div className="flight-info-bar h-24 w-screen bg-slate-300 flex justify-center items-center">
           <div className="flight-info-row font-bold text-lg flex w-[85%] justify-between items-center">
             <div className="flex items-center">
               <FontAwesomeIcon
@@ -108,6 +108,11 @@ export const BookingPage = () => {
             <p>Total price: ${price}</p>
           </div>
         </div>
+
+        <h1 className=" font-bold text-4xl py-4">Passenger Details</h1>
+
+        <BookingForm></BookingForm>
+        <BookingForm></BookingForm>
       </div>
     </div>
   );
@@ -133,3 +138,173 @@ function timeDifference(time1, time2) {
 
   return `${hours}hr ${minutes}mins`;
 }
+
+const BookingForm = () => {
+  const [passengerDetails, setPassengerDetails] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    nationality: "",
+    gender: "",
+    specialNeeds: false,
+    extraBaggage: false,
+  });
+  const [seatPrice, setSeatPrice] = useState(523.7);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setPassengerDetails({
+      ...passengerDetails,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Submit logic here
+    console.log(passengerDetails);
+  };
+
+  return (
+    <div className="w-full mb-10">
+      <form
+        onSubmit={handleSubmit}
+        className=" bg-gray-200 px-64 pt-10 pb-8 mb-4"
+      >
+        <div className="form-info-top justify-between flex">
+          <h2 className="text-3xl mb-4 font-bold">Passenger 1 Details</h2>
+          <div className="flex text-2xl items-center">
+            <h2 className=" font-bold">Seat Price: </h2>
+            <p className="pl-2 italic font-medium ">
+              ${parseFloat(seatPrice.toFixed(2)).toFixed(2)}
+            </p>
+          </div>
+        </div>
+
+        <div className="form-first-row flex gap-5 mb-5">
+          <div className="flex flex-col flex-grow">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              First Name
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="firstName"
+              value={passengerDetails.firstName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="flex flex-col flex-grow">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Last Name
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="firstName"
+              value={passengerDetails.firstName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="flex flex-col flex-grow">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Date of birth
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="firstName"
+              value={passengerDetails.firstName}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+        <div className="form-second-row flex gap-5">
+          <div className="flex flex-col flex-grow-[60]">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Passport Number
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="firstName"
+              value={passengerDetails.firstName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="flex flex-col flex-grow-[30]">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Nationality
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="lastName"
+              value={passengerDetails.lastName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="flex flex-col flex-grow-[20]">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Gender
+            </label>
+            <input
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              type="text"
+              name="dateOfBirth"
+              value={passengerDetails.dateOfBirth}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+        {/* <div className="form-third-row flex gap-5">
+          <div className="flex flex-col flex-grow-40">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Seat Class:
+            </label>
+            <select
+              className="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
+              name="seatClass"
+              value={passengerDetails.seatClass}
+              onChange={handleInputChange}
+            >
+              <option value="Economy">Economy</option>
+              <option value="Business">Business</option>
+              <option value="First Class">First Class</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col flex-grow-25">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Special Needs:
+            </label>
+            <input
+              className="ml-2"
+              type="checkbox"
+              name="specialNeeds"
+              checked={passengerDetails.specialNeeds}
+              // onChange={handleCheckboxChange}
+            />
+          </div>
+
+          <div className="flex flex-col flex-grow">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Extra Baggage Allowance:
+            </label>
+            <input
+              className="ml-2"
+              type="checkbox"
+              name="extraBaggage"
+              checked={passengerDetails.extraBaggage}
+              // onChange={handleCheckboxChange}
+            />
+          </div>
+        </div> */}
+      </form>
+    </div>
+  );
+};
