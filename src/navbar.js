@@ -7,10 +7,9 @@ import { connect } from "react-redux";
 import { logoutUser } from "./actions/actions"; // Ensure this is the correct path to your action creators
 
 function Navbar({ isLoggedIn, logoutUser, user }) {
-
   useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn);
-    console.log("user:", user);
+    // console.log("isLoggedIn:", isLoggedIn);
+    // console.log("user:", user);
   }, [isLoggedIn]);
 
   const handleLogout = () => {

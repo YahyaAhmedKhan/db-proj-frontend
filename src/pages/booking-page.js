@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Navbar from "../navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import navbar from "../navbar";
 import {
+  faAngleLeft,
+  faAngleRight,
   faArrowRight,
   faCircleMinus,
   faCirclePlus,
@@ -12,12 +14,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
+import { BookingForm } from "../components/booking-form";
+import Navbar from "../navbar";
 
 export const BookingPage = () => {
   const { flightId, date } = useParams();
-  const [seats, setSeats] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [seats, setSeats] = useState(1);
+  const [price, setPrice] = useState(423.2);
   const [flight, setFlight] = useState({});
+  const [passengerForms, setPassengerForms] = useState([{}]);
 
   useEffect(() => {
     axiosInstance
@@ -25,30 +30,56 @@ export const BookingPage = () => {
       .then((response) => {
         const flightData = response.data;
         setFlight(flightData[0]); // Set flight details in state
-        console.log("Flight details:", flight);
+        // console.log("Flight details:", flight);
 
-        setPrice(flight.base_price);
+        setPrice(flight.base_price * 1);
       })
       .catch((error) => {
         console.error("Error fetching flight details:", error);
       });
+
+    console.log("passenger forms: ", passengerForms.length);
+    console.log("seats: ", seats);
   }, [flightId]);
 
+  useEffect(() => {
+    console.log("update");
+  }, [passengerForms]);
+
   const handleMinusClick = () => {
-    if (seats > 0) {
+    if (seats > 1) {
       setSeats(seats - 1);
+      setPassengerForms(passengerForms.slice(0, seats - 1));
     }
+    console.log("passenger forms: ", passengerForms.length);
+    console.log("seats: ", seats);
   };
 
   const handlePlusClick = () => {
     if (seats < 9) {
       setSeats(seats + 1);
+      setPassengerForms([...passengerForms, {}]);
     }
+    console.log("passenger forms: ", passengerForms.length);
+    console.log("seats: ", seats);
   };
 
   return (
     <div className="booking-page flex flex-col items-center justify-center">
       <Navbar></Navbar>
+      <div className="flex justify-between w-full">
+        <div className="pl-3 pt-3 text-3xl">
+          <FontAwesomeIcon icon={faAngleLeft} />
+          <Link className="font-semibold ml-2" to={"/flights"}>
+            Return to Flights
+          </Link>
+        </div>
+        <div className="pr-3 pt-3 text-3xl">
+          <Link className="font-semibold mr-2">Proceed to Confirmations</Link>
+          <FontAwesomeIcon icon={faAngleRight} />
+        </div>
+      </div>
+
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl mb-4 font-bold pt-14">Making your booking</h1>
         <p className=" w-[45%] text-center text-lg font-medium pb-8">
@@ -111,8 +142,15 @@ export const BookingPage = () => {
 
         <h1 className=" font-bold text-4xl py-4">Passenger Details</h1>
 
-        <BookingForm></BookingForm>
-        <BookingForm></BookingForm>
+        {passengerForms.map((_, index) => (
+          <BookingForm
+            key={index}
+            index={index}
+            base_price={flight.base_price}
+          />
+        ))}
+
+        {/* <BookingForm></BookingForm> */}
       </div>
     </div>
   );
@@ -138,188 +176,3 @@ function timeDifference(time1, time2) {
 
   return `${hours}hr ${minutes}mins`;
 }
-
-const BookingForm = () => {
-  const [passengerDetails, setPassengerDetails] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    nationality: "",
-    gender: "",
-    specialNeeds: false,
-    extraBaggage: false,
-  });
-  const [seatPrice, setSeatPrice] = useState(523.7);
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setPassengerDetails({
-      ...passengerDetails,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  return (
-    <div className="w-full mb-10">
-      <form
-        // onSubmit={handleSubmit}
-        className="bg-gray-200 px-48 py-6 rounded-lg"
-      >
-        <div className="form-info-top justify-between flex">
-          <h2 className="text-3xl mb-4 font-bold">Passenger 1 Details</h2>
-          <div className="flex text-2xl items-center">
-            <h2 className=" font-bold">Seat Price: </h2>
-            <p className="pl-2 italic font-medium ">
-              ${parseFloat(seatPrice.toFixed(2)).toFixed(2)}
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          {/* First Name */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              First Name
-            </label>
-            <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="firstName"
-              value={passengerDetails.firstName}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Last Name */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Last Name
-            </label>
-            <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="lastName"
-              value={passengerDetails.lastName}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Date of Birth */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Date of Birth
-            </label>
-            <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="date"
-              name="dateOfBirth"
-              value={passengerDetails.dateOfBirth}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          {/* Passport Number */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Passport Number
-            </label>
-            <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="passportNumber"
-              value={passengerDetails.passportNumber}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Nationality */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Nationality
-            </label>
-            <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="nationality"
-              value={passengerDetails.nationality}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Gender */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Gender
-            </label>
-            {/* <input
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              type="text"
-              name="gender"
-              value={passengerDetails.gender}
-              onChange={handleInputChange}
-            /> */}
-            <select
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              name="gender"
-              value={passengerDetails.gender}
-              onChange={handleInputChange}
-            >
-              <option value="Economy">Male</option>
-              <option value="Business">Female</option>
-              <option value="First Class">Other</option>
-              <option value="Rather not say">Rather not say</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          {/* Seat Class */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Seat Class
-            </label>
-            <select
-              className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-              name="seatClass"
-              value={passengerDetails.seatClass}
-              onChange={handleInputChange}
-            >
-              <option value="Economy">Economy</option>
-              <option value="Business">Business</option>
-              <option value="First Class">First Class</option>
-            </select>
-          </div>
-
-          {/* Special Needs */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Special Needs
-            </label>
-            <input
-              type="checkbox"
-              name="specialNeeds"
-              checked={passengerDetails.specialNeeds}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Extra Baggage Allowance */}
-          <div className="flex flex-col">
-            <label className="text-gray-600 text-sm font-medium mb-1">
-              Extra Baggage Allowance
-            </label>
-            <input
-              type="checkbox"
-              name="extraBaggage"
-              checked={passengerDetails.extraBaggage}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-      </form>
-    </div>
-  );
-};
-
-export default BookingForm;
