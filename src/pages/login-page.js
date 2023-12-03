@@ -5,11 +5,14 @@ import Cookies from "js-cookie";
 import { backendURL } from "../constants";
 import { loginUser } from "../actions/actions";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ loginUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,6 +46,7 @@ const Login = ({ loginUser }) => {
     });
     // setIsLoggedIn(true);
     loginUser({ token, emailRes, password });
+    navigate("/flights");
   };
 
   return (
@@ -92,7 +96,6 @@ const Login = ({ loginUser }) => {
 // // Map Redux state to component props
 const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn, // This is probably not needed in this component anymore
-
 });
 
 // Map Redux actions to component props
@@ -100,5 +103,4 @@ const mapDispatchToProps = {
   loginUser, // This should be an action creator that dispatches login action
 };
 
-export default connect(mapStateToProps ,mapDispatchToProps)(Login);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

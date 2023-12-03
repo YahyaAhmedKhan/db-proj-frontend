@@ -38,12 +38,11 @@ export const BookingPage = () => {
         console.error("Error fetching flight details:", error);
       });
 
-    console.log("passenger forms: ", passengerForms.length);
-    console.log("seats: ", seats);
   }, [flightId]);
 
   useEffect(() => {
-    console.log("update");
+    // console.log("update");
+    
   }, [passengerForms]);
 
   const handleMinusClick = () => {
@@ -51,8 +50,6 @@ export const BookingPage = () => {
       setSeats(seats - 1);
       setPassengerForms(passengerForms.slice(0, seats - 1));
     }
-    console.log("passenger forms: ", passengerForms.length);
-    console.log("seats: ", seats);
   };
 
   const handlePlusClick = () => {
@@ -60,8 +57,6 @@ export const BookingPage = () => {
       setSeats(seats + 1);
       setPassengerForms([...passengerForms, {}]);
     }
-    console.log("passenger forms: ", passengerForms.length);
-    console.log("seats: ", seats);
   };
 
   return (

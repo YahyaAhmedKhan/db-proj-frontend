@@ -3,9 +3,11 @@ export const BookingForm = ({ index, base_price }) => {
   const [passengerDetails, setPassengerDetails] = useState({
     firstName: "",
     lastName: "",
-    phoneNumber: "",
+    dateOfBirth: "",
+    passportNumber: "",
     nationality: "",
     gender: "",
+    seatClass: "",
     specialNeeds: false,
     extraBaggage: false,
   });
@@ -17,9 +19,10 @@ export const BookingForm = ({ index, base_price }) => {
       ...passengerDetails,
       [name]: type === "checkbox" ? checked : value,
     });
+    console.log(passengerDetails);
   };
   useEffect(() => {
-    // setSeatPrice(base_price);
+    setSeatPrice(base_price * 0);
 
     const extra_charges = 50 * (passengerDetails.extraBaggage ? 1 : 0);
 
@@ -27,9 +30,12 @@ export const BookingForm = ({ index, base_price }) => {
       setSeatPrice(base_price * 1 + extra_charges);
     } else if (passengerDetails.seatClass === "Business") {
       setSeatPrice(base_price * 1.5 + extra_charges);
-    } else {
+    } else if (passengerDetails.seatClass === "First Class") {
       setSeatPrice(base_price * 2 + extra_charges);
+    } else if (passengerDetails.seatClass === "none") {
+      setSeatPrice(0);
     }
+
   }, [passengerDetails.seatClass, base_price, passengerDetails.extraBaggage]);
 
   return (
@@ -127,22 +133,16 @@ export const BookingForm = ({ index, base_price }) => {
             <label className="text-gray-600 text-sm font-medium mb-1">
               Gender
             </label>
-            {/* <input
-                className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
-                type="text"
-                name="gender"
-                value={passengerDetails.gender}
-                onChange={handleInputChange}
-              /> */}
             <select
               className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               name="gender"
               value={passengerDetails.gender}
               onChange={handleInputChange}
             >
-              <option value="Economy">Male</option>
-              <option value="Business">Female</option>
-              <option value="First Class">Other</option>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
               <option value="Rather not say">Rather not say</option>
             </select>
           </div>
@@ -160,6 +160,7 @@ export const BookingForm = ({ index, base_price }) => {
               value={passengerDetails.seatClass}
               onChange={handleInputChange}
             >
+              <option value="none">Select Seat Class</option>
               <option value="Economy">Economy</option>
               <option value="Business">Business</option>
               <option value="First Class">First Class</option>
