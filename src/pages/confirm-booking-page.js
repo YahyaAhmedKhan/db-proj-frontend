@@ -70,71 +70,50 @@ export const ConfirmBookingPage = () => {
 
 const PassengerInfoCard = ({ passenger }) => {
   return (
-    <div className="bg-gray-200 p-4 my-2 rounded-md w-full">
-      <div className="flex divide-x divide-gray-400">
-        {/* Column 1 - Passenger number, name, date of birth, gender */}
-        <div className="flex-1 px-2">
-          <h3 className="font-semibold text-lg mb-1">
-            Passenger {passenger.id}
-          </h3>
-          <p>
-            <strong>Name:</strong> {passenger.name}
-          </p>
-          <p>
-            <strong>Date of birth:</strong> {passenger.dob}
-          </p>
-          <p>
-            <strong>Gender:</strong> {passenger.gender}
-          </p>
+    <div className="flex flex-row w-full py-4 mt-4 bg-gray-200 px-10">
+      <div className="flex flex-col w-4/12 pr-4">
+        <div className="flex flex-row text-xl font-medium"> Passenger 1</div>
+        <div className="flex flex-row font-extrabold text-2xl"> Yahya Khan</div>
+        <div className="flex flex-row justify-between">
+          <div className="">date of birth </div>
+          <div className=" font-bold text-right">20/4/2002 </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div className="">Gender </div>
+          <div className=" font-bold text-right">Male </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-4/12 justify-end border-r-black border pr-5 pl-4">
+        <div className="flex flex-row justify-between">
+          <div className="">Passport Number </div>
+          <div className=" font-bold text-right">90395380520 </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div className="">Country of residence </div>
+          <div className=" font-bold text-right">Pakistan </div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <div className="">Special Needs </div>
+          <div className=" font-bold text-right">None </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-4/12 justify-end pl-4">
+        <div className=" flex-row flex">
+          <div className=" w-4/12">Seat Class</div>
+          <div className=" w-4/12 font-bold text-right">Business</div>
+          <div className=" w-4/12 text-right">483.70</div>
+        </div>
+        <div className=" flex-row flex">
+          <div className=" w-4/12">Extra Baggage</div>
+          <div className=" w-4/12  font-bold text-right">Yes</div>
+          <div className=" w-4/12 text-right">50.00</div>
         </div>
 
-        {/* Column 2 - Passport number, country of residence, special needs */}
-        <div className="flex-1 px-2">
-          <p>
-            <strong>Passport Number:</strong> {passenger.passportNumber}
-          </p>
-          <p>
-            <strong>Country of Residence:</strong>{" "}
-            {passenger.countryOfResidence}
-          </p>
-          <p>
-            <strong>Special Needs:</strong> {passenger.specialNeeds || "None"}
-          </p>
-        </div>
-
-        {/* Column 3 - Seat class, extra baggage, price */}
-        <div className="flex-1 px-2">
-          <div className="grid grid-rows-3 grid-flow-col gap-4">
-            <div className="flex justify-between">
-              <span className="font-semibold">Seat Class</span>
-              <span className="font-semibold">Business</span>
-              <span className="font-semibold">$483.70</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold">Extra Baggage</span>
-              <span className="font-semibold">Yes</span>
-
-              <span className="font-semibold">$50.00</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-lg">Total</span>
-              <span className="font-semibold text-lg">$523.70</span>
-            </div>
+        <div className=" flex flex-row justify-end">
+          <div className=" flex-row flex border-y border-black box-border">
+            <div className=" pr-4">$</div>
+            <div>523.70</div>
           </div>
-
-          {/* <p>
-            <strong>Extra Baggage:</strong>{" "}
-            {passenger.extraBaggage ? "Yes" : "No"}
-          </p>
-          <div className="flex justify-between items-center mt-2">
-            <div>
-              <p>${passenger.price.toFixed(2)}</p>
-              <p>+ Extra Baggage: ${passenger.extraBaggagePrice.toFixed(2)}</p>
-              <p className="border-t mt-1 pt-1">
-                ${(passenger.price + passenger.extraBaggagePrice).toFixed(2)}
-              </p>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
