@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
-import navbar from "../navbar";
-import { connect } from "react-redux";
+import { Navbar } from "../navbar";
 
 import {
   faAngleLeft,
@@ -17,7 +16,6 @@ import {
 import { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { BookingForm } from "../components/booking-form";
-import Navbar from "../navbar";
 
 export const BookingPage = () => {
   const { flightId, date } = useParams();

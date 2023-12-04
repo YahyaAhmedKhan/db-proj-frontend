@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../navbar";
+import { Navbar } from "../navbar";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { backendURL } from "../constants";

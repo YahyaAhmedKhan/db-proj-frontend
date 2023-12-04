@@ -1,4 +1,4 @@
-import Navbar from "../navbar";
+import { Navbar } from "../navbar";
 
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
