@@ -70,8 +70,8 @@ export const ConfirmBookingPage = () => {
 
 const PassengerInfoCard = ({ passenger }) => {
   return (
-    <div className="flex flex-row w-full py-4 mt-4 bg-gray-200 px-10">
-      <div className="flex flex-col w-4/12 pr-4">
+    <div className="flex flex-row w-full py-4 mt-4 bg-gray-200 px-10 ">
+      <div className="flex flex-col w-4/12 pr-4 space-y-1">
         <div className="flex flex-row text-xl font-medium"> Passenger 1</div>
         <div className="flex flex-row font-extrabold text-2xl"> Yahya Khan</div>
         <div className="flex flex-row justify-between">
@@ -83,7 +83,7 @@ const PassengerInfoCard = ({ passenger }) => {
           <div className=" font-bold text-right">Male </div>
         </div>
       </div>
-      <div className="flex flex-col w-4/12 justify-end border-r-black border pr-5 pl-4">
+      <div className="flex flex-col w-4/12 justify-end border-r-black border pr-5 pl-4 space-y-1">
         <div className="flex flex-row justify-between">
           <div className="">Passport Number </div>
           <div className=" font-bold text-right">90395380520 </div>
@@ -97,7 +97,7 @@ const PassengerInfoCard = ({ passenger }) => {
           <div className=" font-bold text-right">None </div>
         </div>
       </div>
-      <div className="flex flex-col w-4/12 justify-end pl-4">
+      <div className="flex flex-col w-4/12 justify-end pl-4 space-y-1">
         <div className=" flex-row flex">
           <div className=" w-4/12">Seat Class</div>
           <div className=" w-4/12 font-bold text-right">Business</div>
