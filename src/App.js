@@ -5,6 +5,7 @@ import Login from "./pages/login-page";
 import SignUp from "./pages/sign-up-page";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { BookingPage } from "./pages/booking-page";
+import { ConfirmBookingPage } from "./pages/confirm-booking-page";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/flights" element={<FlightsPage />} />
         <Route path="/booking/:flightId/:date" element={<BookingPage />} />
+        <Route path="/booking/:flightId/:date/confirm" element={<ConfirmBookingPage />} />
+        
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

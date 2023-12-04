@@ -36,10 +36,11 @@ export const FlightsPage = () => {
           destination: flight.destination,
           base_price: flight.base_price,
           plane_id: flight.plane_id,
-          total_passengers: flight.total_passengers,
+          seats_left: flight.seats_left,
         }));
         setFlightResults(flightDataArray);
-        // console.log("Flight results:", flightDataArray);
+
+        console.log("Flight results:", flightDataArray[0]);
       } else {
         console.error("Error searching for flights");
       }
@@ -136,7 +137,7 @@ export const FlightsPage = () => {
                   return (
                     <tr
                       // className=" text-center bg-white"
-                      className="flightRow text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer"
+                      className="flightRow text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer hover:shadow-xl"
                       key={flight.flight_id}
                       title="Click to book this flight"
                       onClick={() => handleFlightClick(flight.flight_id)}
@@ -150,7 +151,7 @@ export const FlightsPage = () => {
                         {flight.destination} - {flight.arrival_time}
                       </td>
                       <td className="font-extrabold py-5">
-                        {flight.total_passengers}
+                        {flight.seats_left}
                       </td>
                       <td className="font-extrabold pl-10 rounded-r-lg">
                         {flight.base_price}

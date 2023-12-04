@@ -14,13 +14,16 @@ export const BookingForm = ({ index, base_price }) => {
   const [seatPrice, setSeatPrice] = useState(0);
 
   const handleInputChange = (e) => {
+    // console.log("before: ", passengerDetails);
     const { name, value, type, checked } = e.target;
+
     setPassengerDetails({
       ...passengerDetails,
       [name]: type === "checkbox" ? checked : value,
     });
-    console.log(passengerDetails);
+    // console.log("after:", passengerDetails); 
   };
+
   useEffect(() => {
     setSeatPrice(base_price * 0);
 
@@ -35,8 +38,8 @@ export const BookingForm = ({ index, base_price }) => {
     } else if (passengerDetails.seatClass === "none") {
       setSeatPrice(0);
     }
-
   }, [passengerDetails.seatClass, base_price, passengerDetails.extraBaggage]);
+
 
   return (
     <div className="w-full mb-10">

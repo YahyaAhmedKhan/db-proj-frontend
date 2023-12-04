@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
 import navbar from "../navbar";
+import { connect } from "react-redux";
+
 import {
   faAngleLeft,
   faAngleRight,
@@ -37,12 +39,10 @@ export const BookingPage = () => {
       .catch((error) => {
         console.error("Error fetching flight details:", error);
       });
-
   }, [flightId]);
 
   useEffect(() => {
     // console.log("update");
-    
   }, [passengerForms]);
 
   const handleMinusClick = () => {
