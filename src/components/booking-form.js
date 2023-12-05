@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 export const BookingForm = ({ index, base_price }) => {
+
+
+  
   const [passengerDetails, setPassengerDetails] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +24,7 @@ export const BookingForm = ({ index, base_price }) => {
       ...passengerDetails,
       [name]: type === "checkbox" ? checked : value,
     });
-    // console.log("after:", passengerDetails); 
+    // console.log("after:", passengerDetails);
   };
 
   useEffect(() => {
@@ -39,7 +42,6 @@ export const BookingForm = ({ index, base_price }) => {
       setSeatPrice(0);
     }
   }, [passengerDetails.seatClass, base_price, passengerDetails.extraBaggage]);
-
 
   return (
     <div className="w-full mb-10">

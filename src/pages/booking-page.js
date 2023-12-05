@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
 import { Navbar } from "../navbar";
 
+import { useDispatch } from "react-redux";
+
 import {
   faAngleLeft,
   faAngleRight,
@@ -16,13 +18,24 @@ import {
 import { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { BookingForm } from "../components/booking-form";
+import { addSeat, removeSeat } from "../slices/passenger-details-slice";
+import { useSelector } from "react-redux";
 
 export const BookingPage = () => {
   const { flightId, date } = useParams();
-  const [seats, setSeats] = useState(1);
+  // const [seats, setSeats] = useState(1);
   const [price, setPrice] = useState(423.2);
   const [flight, setFlight] = useState({});
-  const [passengerForms, setPassengerForms] = useState([{}]);
+  // const [passengerForms, setPassengerForms] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const seats = useSelector((state) => state.passengerDetails.length);
+  const passengerForms = useSelector((state) => state.passengerDetails);
+
+  useEffect(() => {
+    dispatch(addSeat({ index: 0 }));
+  }, []);
 
   useEffect(() => {
     axiosInstance
@@ -39,21 +52,19 @@ export const BookingPage = () => {
       });
   }, [flightId]);
 
-  useEffect(() => {
-    // console.log("update");
-  }, [passengerForms]);
-
   const handleMinusClick = () => {
     if (seats > 1) {
-      setSeats(seats - 1);
-      setPassengerForms(passengerForms.slice(0, seats - 1));
+      // setSeats(seats - 1);
+      dispatch(removeSeat({ index: seats - 1 }));
+      // setPassengerForms(passengerForms.slice(0, seats - 1));
     }
   };
 
   const handlePlusClick = () => {
     if (seats < 9) {
-      setSeats(seats + 1);
-      setPassengerForms([...passengerForms, {}]);
+      // setSeats(seats + 1);
+      dispatch(addSeat({ index: seats }));
+      // setPassengerForms([...passengerForms, {}]);
     }
   };
 
@@ -114,7 +125,7 @@ export const BookingPage = () => {
             />
             <p>{flight ? flight.arrival_time : null}</p>
             <p>{flight ? flight.destination : null}</p>
-            <div className=" flex">
+            <div className=" flex select-none">
               <FontAwesomeIcon
                 onClick={handleMinusClick}
                 className="text-2xl cursor-pointer hover:scale-110 transform transition-transform "

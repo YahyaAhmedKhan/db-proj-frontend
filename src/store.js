@@ -2,12 +2,12 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import authReducer from "./reducers/authReducer";
+import { authReducer } from "./reducers/authReducer";
+import { passengerDetailsReducer } from "./slices/passenger-details-slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  // booking: bookingReducer,
-
+  passengerDetails: passengerDetailsReducer,
 });
 
 const store = configureStore({

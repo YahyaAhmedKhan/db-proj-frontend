@@ -1,0 +1,48 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { ADD_SEAT, REMOVE_SEAT, UPDATE_DETAILS } from "../actions/actionTypes";
+
+const initialState = [];
+
+const passengerDetailsSlice = createSlice({
+  name: "passengerDetails",
+  initialState,
+  reducers: {
+    addSeat: (state, action) => {
+      const { index } = action.payload;
+      state.push({
+        index,
+        passengerDetails: {
+          firstName: "",
+          lastName: "",
+          dateOfBirth: "",
+          passportNumber: "",
+          nationality: "",
+          gender: "",
+          seatClass: "",
+          specialNeeds: false,
+          extraBaggage: false,
+        },
+        price: 0,
+      });
+    },
+    updateDetails: (state, action) => {
+      const { index, passengerDetails, price } = action.payload;
+      state[index] = {
+        ...state[index],
+        passengerDetails,
+        price,
+      };
+    },
+    removeSeat: (state, action) => {
+      const { index } = action.payload;
+      const removeIndex = state.findIndex((item) => item.index === index);
+      if (removeIndex !== -1) {
+        state.splice(removeIndex, 1);
+      }
+    },
+  },
+});
+
+export const { addSeat, updateDetails, removeSeat } =
+  passengerDetailsSlice.actions;
+export const passengerDetailsReducer = passengerDetailsSlice.reducer;

@@ -15,8 +15,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/flights" element={<FlightsPage />} />
         <Route path="/booking/:flightId/:date" element={<BookingPage />} />
-        <Route path="/booking/:flightId/:date/confirm" element={<ConfirmBookingPage />} />
-        
+        <Route
+          path="/booking/:flightId/:date/confirm"
+          element={<ConfirmBookingPage />}
+        />
+
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
