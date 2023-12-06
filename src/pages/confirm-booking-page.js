@@ -26,24 +26,30 @@ export const ConfirmBookingPage = () => {
     plane_id: 101,
     seats_left: 100,
   };
-  const passengerData = {
-    id: 1,
-    name: "Yahya Khan",
-    dob: "20/4/2002",
-    gender: "Male",
-    passportNumber: "90395380520",
-    countryOfResidence: "Pakistan",
-    specialNeeds: "None",
-    seatClass: "Business",
-    extraBaggage: true,
-    price: 483.7,
-    extraBaggagePrice: 50.0,
-  };
+  // const passengerData = {
+  //   id: 1,
+  //   name: "Yahya Khan",
+  //   dob: "20/4/2002",
+  //   gender: "Male",
+  //   passportNumber: "90395380520",
+  //   countryOfResidence: "Pakistan",
+  //   specialNeeds: "None",
+  //   seatClass: "Business",
+  //   extraBaggage: true,
+  //   price: 483.7,
+  //   extraBaggagePrice: 50.0,
+  // };
 
   const passengerDetails = useSelector((state) => state.passengerFormList);
   useEffect(() => {
     console.log(passengerDetails);
   });
+
+  const passengerData = passengerDetails[0];
+
+  useEffect(() => {
+    console.log("passengerData:", passengerData);
+  }, [passengerData]);
 
   function getPathWithoutLastSegment(url) {
     const parts = url.split("/");
@@ -51,18 +57,16 @@ export const ConfirmBookingPage = () => {
     return parts.join("/");
   }
 
-  // Example usage
-  const currentUrl = "http://localhost:3000/booking/EK606/2023-11-17/confirm";
-  const newPath = getPathWithoutLastSegment(currentUrl);
-  console.log(newPath); // Outputs 'http://localhost:3000/booking/EK606/2023-11-17'
-
   return (
     <div className="booking-page flex flex-col items-center justify-center">
       <Navbar></Navbar>
       <div className="flex justify-between w-full">
         <div className="pl-5 pt-5 text-3xl">
           <FontAwesomeIcon icon={faAngleLeft} />
-          <Link className="font-bold ml-2" to={getPathWithoutLastSegment(window.location.pathname)}>
+          <Link
+            className="font-bold ml-2"
+            to={getPathWithoutLastSegment(window.location.pathname)}
+          >
             Return to Booking Page
           </Link>
         </div>
@@ -89,57 +93,88 @@ export const ConfirmBookingPage = () => {
           </div>
         </div>
 
-        <PassengerInfoCard passenger={passengerData} />
+        <PassengerInfoCard {...passengerData} />
       </div>
     </div>
   );
 };
 
-const PassengerInfoCard = ({ passenger }) => {
+function formatPrice(price) {
+  return parseFloat(price.toFixed(2)).toFixed(2);
+}
+
+// make a dicitonrary to map seat class to price
+const seatClassPrice = {
+  Economy: formatPrice(250),
+  Business: formatPrice(375),
+  FirstClass: formatPrice(500),
+};
+
+const PassengerInfoCard = ({ index, passengerDetails, price }) => {
+  const {
+    firstName,
+    lastName,
+    dateOfBirth,
+    passportNumber,
+    nationality,
+    gender,
+    seatClass,
+    specialNeeds,
+    extraBaggage,
+  } = passengerDetails;
+
   return (
     <div className="flex flex-row w-full py-4 mt-4 bg-gray-200 px-10 ">
       <div className="flex flex-col w-4/12 pr-4 space-y-1">
-        <div className="flex flex-row text-xl font-medium"> Passenger 1</div>
-        <div className="flex flex-row font-extrabold text-2xl"> Yahya Khan</div>
+        <div className="flex flex-row text-xl font-medium">
+          Passenger {index + 1}
+        </div>
+        <div className="flex flex-row font-extrabold text-2xl">
+          {`${firstName} ${lastName}`}
+        </div>
         <div className="flex flex-row justify-between">
-          <div className="">date of birth </div>
-          <div className=" font-bold text-right">20/4/2002 </div>
+          <div className="">Date of Birth </div>
+          <div className=" font-bold text-right">{dateOfBirth}</div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Gender </div>
-          <div className=" font-bold text-right">Male </div>
+          <div className=" font-bold text-right">{gender}</div>
         </div>
       </div>
       <div className="flex flex-col w-4/12 justify-end border-r-black border pr-5 pl-4 space-y-1">
         <div className="flex flex-row justify-between">
           <div className="">Passport Number </div>
-          <div className=" font-bold text-right">90395380520 </div>
+          <div className=" font-bold text-right">{passportNumber}</div>
         </div>
         <div className="flex flex-row justify-between">
-          <div className="">Country of residence </div>
-          <div className=" font-bold text-right">Pakistan </div>
+          <div className="">Country of Residence </div>
+          <div className=" font-bold text-right">{nationality}</div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Special Needs </div>
-          <div className=" font-bold text-right">None </div>
+          <div className=" font-bold text-right">
+            {specialNeeds ? "Yes" : "None"}
+          </div>
         </div>
       </div>
       <div className="flex flex-col w-4/12 justify-end pl-4 space-y-1">
         <div className=" flex-row flex">
           <div className=" w-4/12">Seat Class</div>
-          <div className=" w-4/12 font-bold text-right">Business</div>
-          <div className=" w-4/12 text-right">483.70</div>
+          <div className=" w-4/12 font-bold text-right">{seatClass}</div>
+          <div className=" w-4/12 text-right">{seatClassPrice[seatClass]}</div>
         </div>
         <div className=" flex-row flex">
           <div className=" w-4/12">Extra Baggage</div>
-          <div className=" w-4/12  font-bold text-right">Yes</div>
+          <div className=" w-4/12  font-bold text-right">
+            {extraBaggage ? "Yes" : "No"}
+          </div>
           <div className=" w-4/12 text-right">50.00</div>
         </div>
 
         <div className=" flex flex-row justify-end">
           <div className=" flex-row flex border-y border-black box-border">
             <div className=" pr-4">$</div>
-            <div>523.70</div>
+            <div>{formatPrice(price)}</div>
           </div>
         </div>
       </div>

@@ -24,11 +24,7 @@ import { useSelector } from "react-redux";
 
 export const BookingPage = () => {
   const { flightId, date } = useParams();
-  // const [seats, setSeats] = useState(1);
-  // const [price, setPrice] = useState(423.2);
   const [flight, setFlight] = useState({});
-  // const [passengerForms, setPassengerForms] = useState([]);
-
   const dispatch = useDispatch();
 
   const seats = useSelector((state) => state.passengerFormList.length);
@@ -68,13 +64,13 @@ export const BookingPage = () => {
     <div className="booking-page flex flex-col items-center justify-center">
       <Navbar></Navbar>
       <div className="flex justify-between w-full">
-        <div className="pl-3 pt-3 text-3xl">
+        <div className="pl-5 pt-5 text-3xl">
           <FontAwesomeIcon icon={faAngleLeft} />
           <Link className="font-bold ml-2" to={"/flights"}>
             Return to Flights
           </Link>
         </div>
-        <div className="pr-3 pt-3 text-3xl">
+        <div className="pr-5 pt-5 text-3xl">
           <Link
             className="font-bold mr-2"
             to={`${window.location.pathname}/confirm`}

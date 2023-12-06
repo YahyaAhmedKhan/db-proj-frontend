@@ -21,10 +21,8 @@ export const BookingForm = ({ index, base_price }) => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Make a copy of the current passengerDetails
     const updatedPassengerDetails = { ...passengerDetails };
-
-    // Update the specific field based on the input name
+    
     if (type === "checkbox") {
       updatedPassengerDetails[name] = checked;
     } else {
