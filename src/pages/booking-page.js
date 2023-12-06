@@ -51,9 +51,6 @@ export const BookingPage = () => {
       .then((response) => {
         const flightData = response.data;
         setFlight(flightData[0]); // Set flight details in state
-        // console.log("Flight details:", flight);
-
-        // setPrice(flight.base_price * 1);
       })
       .catch((error) => {
         console.error("Error fetching flight details:", error);
@@ -62,17 +59,13 @@ export const BookingPage = () => {
 
   const handleMinusClick = () => {
     if (seats > 1) {
-      // setSeats(seats - 1);
       dispatch(removeSeat({ index: seats - 1 }));
-      // setPassengerForms(passengerForms.slice(0, seats - 1));
     }
   };
 
   const handlePlusClick = () => {
     if (seats < 9) {
-      // setSeats(seats + 1);
       dispatch(addSeat({ index: seats }));
-      // setPassengerForms([...passengerForms, {}]);
     }
   };
 
@@ -87,7 +80,12 @@ export const BookingPage = () => {
           </Link>
         </div>
         <div className="pr-3 pt-3 text-3xl">
-          <Link className="font-semibold mr-2">Proceed to Confirmations</Link>
+          <Link
+            className="font-semibold mr-2"
+            to={`${window.location.pathname}/confirm`}
+          >
+            Proceed to Confirmations
+          </Link>
           <FontAwesomeIcon icon={faAngleRight} />
         </div>
       </div>

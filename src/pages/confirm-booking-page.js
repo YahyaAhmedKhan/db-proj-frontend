@@ -1,14 +1,16 @@
 import { Navbar } from "../navbar";
 
-import React from "react";
+import React, { startTransition, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCommentDollar,
   faPlane,
   faPlaneArrival,
   faPlaneDeparture,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export const ConfirmBookingPage = () => {
   const flight = {
@@ -35,6 +37,11 @@ export const ConfirmBookingPage = () => {
     price: 483.7,
     extraBaggagePrice: 50.0,
   };
+
+  const passengerDetails = useSelector((state) => state.passengerFormsList);
+  useEffect(() => {
+    console.log(passengerDetails);
+  });
 
   return (
     <div className="booking-page flex flex-col items-center justify-center">
