@@ -10,12 +10,13 @@ import {
   faArrowRight,
   faCircleMinus,
   faCirclePlus,
+  faCommentDollar,
   faMinus,
   faPlane,
   faPlaneArrival,
   faPlaneDeparture,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { BookingForm } from "../components/booking-form";
 import { addSeat, removeSeat } from "../slices/passenger-details-slice";
@@ -24,17 +25,24 @@ import { useSelector } from "react-redux";
 export const BookingPage = () => {
   const { flightId, date } = useParams();
   // const [seats, setSeats] = useState(1);
-  const [price, setPrice] = useState(423.2);
+  // const [price, setPrice] = useState(423.2);
   const [flight, setFlight] = useState({});
   // const [passengerForms, setPassengerForms] = useState([]);
 
   const dispatch = useDispatch();
 
-  const seats = useSelector((state) => state.passengerDetails.length);
-  const passengerForms = useSelector((state) => state.passengerDetails);
+  const seats = useSelector((state) => state.passengerFormList.length);
+  const passengerForms = useSelector((state) => state.passengerFormList);
+
+  const price = useMemo(() => {
+    return passengerForms.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, 0);
+  }, [passengerForms]);
 
   useEffect(() => {
     dispatch(addSeat({ index: 0 }));
+    // console.log("Passenger forms:", passengerForms);
   }, []);
 
   useEffect(() => {
@@ -45,7 +53,7 @@ export const BookingPage = () => {
         setFlight(flightData[0]); // Set flight details in state
         // console.log("Flight details:", flight);
 
-        setPrice(flight.base_price * 1);
+        // setPrice(flight.base_price * 1);
       })
       .catch((error) => {
         console.error("Error fetching flight details:", error);

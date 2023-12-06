@@ -7,7 +7,7 @@ import { passengerDetailsReducer } from "./slices/passenger-details-slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  passengerDetails: passengerDetailsReducer,
+  passengerFormList: passengerDetailsReducer,
 });
 
 const store = configureStore({

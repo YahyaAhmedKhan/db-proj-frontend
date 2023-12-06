@@ -1,48 +1,70 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateDetails } from "../slices/passenger-details-slice";
+
 export const BookingForm = ({ index, base_price }) => {
+  const dispatch = useDispatch();
 
-
-  
-  const [passengerDetails, setPassengerDetails] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    passportNumber: "",
-    nationality: "",
-    gender: "",
-    seatClass: "",
-    specialNeeds: false,
-    extraBaggage: false,
-  });
-  const [seatPrice, setSeatPrice] = useState(0);
-
-  const handleInputChange = (e) => {
-    // console.log("before: ", passengerDetails);
-    const { name, value, type, checked } = e.target;
-
-    setPassengerDetails({
-      ...passengerDetails,
-      [name]: type === "checkbox" ? checked : value,
-    });
-    // console.log("after:", passengerDetails);
-  };
+  const passengerDetails = useSelector(
+    (state) => state.passengerFormList[index].passengerDetails
+  );
 
   useEffect(() => {
-    setSeatPrice(base_price * 0);
+    console.log("passengerDetails at start:", passengerDetails);
+  }, [passengerDetails]);
 
+  // const seatPrice = useSelector((state) => state.passengerFormList[index].price);
+  const seatPrice = useSelector(
+    (state) => state.passengerFormList[index].price
+  );
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    // Make a copy of the current passengerDetails
+    const updatedPassengerDetails = { ...passengerDetails };
+
+    // Update the specific field based on the input name
+    if (type === "checkbox") {
+      updatedPassengerDetails[name] = checked;
+    } else {
+      updatedPassengerDetails[name] = value;
+    }
+
+    const price = calculateSeatPrice(passengerDetails, base_price);
+
+    console.log("passengerDetails before dispatch:", passengerDetails);
+
+    console.log("updatedPassengerDetails:", updatedPassengerDetails);
+
+    console.log("index:", index);
+
+    const updatePrice = calculateSeatPrice(updatedPassengerDetails, base_price);
+
+    dispatch(
+      updateDetails({
+        index,
+        passengerDetails: updatedPassengerDetails,
+        price: updatePrice,
+      })
+    );
+    console.log("passengerDetails after dispatch:", passengerDetails);
+  };
+  function calculateSeatPrice(passengerDetails, base_price) {
     const extra_charges = 50 * (passengerDetails.extraBaggage ? 1 : 0);
 
     if (passengerDetails.seatClass === "Economy") {
-      setSeatPrice(base_price * 1 + extra_charges);
+      return base_price * 1 + extra_charges;
     } else if (passengerDetails.seatClass === "Business") {
-      setSeatPrice(base_price * 1.5 + extra_charges);
+      return base_price * 1.5 + extra_charges;
     } else if (passengerDetails.seatClass === "First Class") {
-      setSeatPrice(base_price * 2 + extra_charges);
+      return base_price * 2 + extra_charges;
     } else if (passengerDetails.seatClass === "none") {
-      setSeatPrice(0);
+      return 0;
     }
-  }, [passengerDetails.seatClass, base_price, passengerDetails.extraBaggage]);
 
+    return 0; // Default to 0 if seatClass is not recognized
+  }
   return (
     <div className="w-full mb-10">
       <form
@@ -70,7 +92,7 @@ export const BookingForm = ({ index, base_price }) => {
               className="py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline rounded-lg"
               type="text"
               name="firstName"
-              value={passengerDetails.firstName}
+              // value={passengerDetails.firstName}
               onChange={handleInputChange}
             />
           </div>
