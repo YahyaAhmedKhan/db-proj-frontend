@@ -13,6 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Axios } from "axios";
+import axiosInstance from "../axiosConfig";
+import { backendURL } from "../constants";
 
 export const ConfirmBookingPage = () => {
   const flight = {
@@ -26,45 +29,103 @@ export const ConfirmBookingPage = () => {
     plane_id: 101,
     seats_left: 100,
   };
-  // const passengerData = {
-  //   id: 1,
-  //   name: "Yahya Khan",
-  //   dob: "20/4/2002",
-  //   gender: "Male",
-  //   passportNumber: "90395380520",
-  //   countryOfResidence: "Pakistan",
-  //   specialNeeds: "None",
-  //   seatClass: "Business",
-  //   extraBaggage: true,
-  //   price: 483.7,
-  //   extraBaggagePrice: 50.0,
-  // };
 
-  const passengerDetails = useSelector((state) => state.passengerFormList);
-  useEffect(() => {
-    console.log(passengerDetails);
-  });
+  const accountId = 9;
+  const flightRecordId = 4;
 
-  const passengerData = passengerDetails[0];
+  function mapPassengerDetails(passengers) {
+    const genderMap = {
+      male: "M",
+      female: "F",
+      other: "O",
+      "rather not say": "X",
+    };
 
-  useEffect(() => {
-    console.log("passengerData:", passengerData);
-  }, [passengerData]);
+    return passengers.map((passenger) => {
+      const {
+        firstName,
+        lastName,
+        dateOfBirth,
+        passportNumber,
+        nationality,
+        gender,
+        seatClass,
+        specialNeeds,
+        extraBaggage,
+      } = passenger.passengerDetails;
+
+      const price = passenger.price;
+
+      return {
+        firstName,
+        lastName,
+        dateOfBirth,
+        passportNumber,
+        nationality,
+        gender: genderMap[gender.toLowerCase()] || "X",
+        seatClass,
+        specialNeeds,
+        extraBaggage,
+        price,
+      };
+    });
+  }
+
+  const passengerDetailsList = useSelector((state) => state.passengerFormList);
+
+  // useEffect(() => {
+  //   console.log("before formatting passenger details:", passengerDetailsList);
+
+  //   console.log(
+  //     "formatted passenger details:",
+  //     mapPassengerDetails(passengerDetailsList)
+  //   );
+  // });
+
+  const passengerData = passengerDetailsList[0];
 
   function getPathWithoutLastSegment(url) {
     const parts = url.split("/");
     parts.pop();
     return parts.join("/");
   }
+  const passengerDetails = mapPassengerDetails(passengerDetailsList);
+
+  const bookingDetails = {
+    accountId,
+    flightRecordId,
+    passengerDetails,
+  };
+
+  useEffect(() => {
+    console.log("bookingDetails:", bookingDetails);
+  }, [bookingDetails]);
+
+  const handleConfirmBooking = async () => {
+    const url = "booking/makeBooking";
+    console.log(bookingDetails);
+
+    try {
+      // const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
+      const response = await axiosInstance.post(url, bookingDetails);
+      if (response.status === 200) {
+        console.log("Booking successful");
+      } else {
+        console.error("Error booking flight");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  };
 
   return (
-    <div className="booking-page flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center booking-page">
       <Navbar></Navbar>
       <div className="flex justify-between w-full">
-        <div className="pl-5 pt-5 text-3xl">
+        <div className="pt-5 pl-5 text-3xl">
           <FontAwesomeIcon icon={faAngleLeft} />
           <Link
-            className="font-bold ml-2"
+            className="ml-2 font-bold"
             to={getPathWithoutLastSegment(window.location.pathname)}
           >
             Return to Booking Page
@@ -72,14 +133,14 @@ export const ConfirmBookingPage = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-5xl mb-4 font-bold pt-14">
+        <h1 className="mb-4 text-5xl font-bold pt-14">
           Review & Confirm your Booking
         </h1>
         <p className=" w-[45%] text-center text-lg font-medium pb-8">
           Review all the passenger details and confirm your booking once you
           have done so. Press confirm and pay to complete your booking.
         </p>
-        <div className="flight-info-bar bg-gray-200 py-6 px-4 w-full">
+        <div className="w-full px-4 py-6 bg-gray-200 flight-info-bar">
           <div className="flex items-center justify-between">
             <FontAwesomeIcon icon={faPlane} className="-rotate-45" />
             <p>{flight.flight_id}</p>
@@ -94,7 +155,16 @@ export const ConfirmBookingPage = () => {
         </div>
 
         <PassengerInfoCard {...passengerData} />
+
+        <div className="flex justify-end w-full ">
+          <Link className="mt-10" onClick={handleConfirmBooking}>
+            <div className="px-2 py-1 text-xl font-bold border-2 border-black rounded-lg p">
+              Confirm & Pay Now
+            </div>
+          </Link>
+        </div>
       </div>
+      <div className="w-screen mt-40 bg-gray-300 h-72"></div>
     </div>
   );
 };
@@ -110,6 +180,16 @@ const seatClassPrice = {
   FirstClass: formatPrice(500),
 };
 
+function formatDate(inputDate) {
+  const dateParts = inputDate.split("-");
+  const year = dateParts[0];
+  const month = new Date(inputDate).toLocaleString("default", {
+    month: "short",
+  });
+  const day = dateParts[2];
+  return `${day} ${month} ${year}`;
+}
+
 const PassengerInfoCard = ({ index, passengerDetails, price }) => {
   const {
     firstName,
@@ -124,57 +204,59 @@ const PassengerInfoCard = ({ index, passengerDetails, price }) => {
   } = passengerDetails;
 
   return (
-    <div className="flex flex-row w-full py-4 mt-4 bg-gray-200 px-10 ">
+    <div className="flex flex-row w-full px-10 py-4 mt-4 bg-gray-200 ">
       <div className="flex flex-col w-4/12 pr-4 space-y-1">
         <div className="flex flex-row text-xl font-medium">
           Passenger {index + 1}
         </div>
-        <div className="flex flex-row font-extrabold text-2xl">
+        <div className="flex flex-row text-2xl font-extrabold">
           {`${firstName} ${lastName}`}
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Date of Birth </div>
-          <div className=" font-bold text-right">{dateOfBirth}</div>
+          <div className="font-bold text-right ">{formatDate(dateOfBirth)}</div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Gender </div>
-          <div className=" font-bold text-right">{gender}</div>
+          <div className="font-bold text-right ">{gender}</div>
         </div>
       </div>
-      <div className="flex flex-col w-4/12 justify-end border-r-black border pr-5 pl-4 space-y-1">
+      <div className="flex flex-col justify-end w-4/12 pl-4 pr-5 space-y-1 border border-r-black">
         <div className="flex flex-row justify-between">
           <div className="">Passport Number </div>
-          <div className=" font-bold text-right">{passportNumber}</div>
+          <div className="font-bold text-right ">{passportNumber}</div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Country of Residence </div>
-          <div className=" font-bold text-right">{nationality}</div>
+          <div className="font-bold text-right ">{nationality}</div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">Special Needs </div>
-          <div className=" font-bold text-right">
+          <div className="font-bold text-right ">
             {specialNeeds ? "Yes" : "None"}
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-4/12 justify-end pl-4 space-y-1">
-        <div className=" flex-row flex">
-          <div className=" w-4/12">Seat Class</div>
-          <div className=" w-4/12 font-bold text-right">{seatClass}</div>
-          <div className=" w-4/12 text-right">{seatClassPrice[seatClass]}</div>
+      <div className="flex flex-col justify-end w-4/12 pl-4 space-y-1">
+        <div className="flex flex-row ">
+          <div className="w-4/12 ">Seat Class</div>
+          <div className="w-4/12 font-bold text-right ">{seatClass}</div>
+          <div className="w-4/12 font-semibold text-right ">
+            {seatClassPrice[seatClass]}
+          </div>
         </div>
-        <div className=" flex-row flex">
-          <div className=" w-4/12">Extra Baggage</div>
-          <div className=" w-4/12  font-bold text-right">
+        <div className="flex flex-row ">
+          <div className="w-4/12 ">Extra Baggage</div>
+          <div className="w-4/12 font-bold text-right ">
             {extraBaggage ? "Yes" : "No"}
           </div>
-          <div className=" w-4/12 text-right">50.00</div>
+          <div className="w-4/12 font-semibold text-right ">50.00</div>
         </div>
 
-        <div className=" flex flex-row justify-end">
-          <div className=" flex-row flex border-y border-black box-border">
-            <div className=" pr-4">$</div>
-            <div>{formatPrice(price)}</div>
+        <div className="flex flex-row justify-end ">
+          <div className="box-border flex flex-row border-black border-y">
+            <div className="pr-4 ">$</div>
+            <div className="font-semibold ">{formatPrice(price)}</div>
           </div>
         </div>
       </div>

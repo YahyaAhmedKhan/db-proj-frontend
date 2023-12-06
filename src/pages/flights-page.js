@@ -61,9 +61,9 @@ export const FlightsPage = () => {
     <div className="flex flex-col items-center justify-center">
       <Navbar> </Navbar>
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-5xl mb-4 font-bold pt-14">Search for flights</h1>
+        <h1 className="mb-4 text-5xl font-bold pt-14">Search for flights</h1>
         <p
-          className=" w-1/2 text-center text-lg font-medium pb-8"
+          className="w-1/2 pb-8 text-lg font-medium text-center "
           style={{ width: "45%" }}
         >
           Search for the flight you want by specifying the origin and
@@ -73,8 +73,8 @@ export const FlightsPage = () => {
         <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between ">
           <input
             type="text"
-            // className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
-            className="text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
+            // className="w-1/4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
             placeholder="Select Origin"
             value={origin}
             onChange={(e) => {
@@ -83,8 +83,8 @@ export const FlightsPage = () => {
           />
           <input
             type="text"
-            className="text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500 "
-            // className=" text-center w-1/4 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500 "
+            // className="w-1/4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             placeholder="Select Destination"
             value={destination}
             onChange={(e) => {
@@ -93,8 +93,8 @@ export const FlightsPage = () => {
           />
           <input
             type="date"
-            className="text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
-            // className=" text-center w-1/5 h-1/2 pr-4 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="w-1/5 pr-4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
+            // className="w-1/5 pr-4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
@@ -102,8 +102,8 @@ export const FlightsPage = () => {
           />
           <button
             type="button"
-            // className=" text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none focus:border focus:border-blue-500"
-            className="text-center w-1/5 h-1/2 bg-white rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 transform hover:scale-105 transition duration-50 cursor-pointer"
+            // className="w-1/5 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            className="w-1/5 text-center transition transform bg-white cursor-pointer h-1/2 rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 hover:scale-105 duration-50"
             onClick={handleSearch}
           >
             Search
@@ -111,7 +111,7 @@ export const FlightsPage = () => {
         </div>
 
         <div className="flight-results w-3/4 flex flex-col mt-6 bg-gray-200 px-[2%]">
-          <table className="flights-table w-full  h-full mt-3  mb-5 border-separate border-spacing-y-3 ">
+          <table className="w-full h-full mt-3 mb-5 border-separate flights-table border-spacing-y-3 ">
             <thead>
               <tr className="text-center underline">
                 <th className="pb-3 font-medium">Flight Code</th>
@@ -123,7 +123,7 @@ export const FlightsPage = () => {
               </tr>
             </thead>
             {flightResults.length > 0 ? (
-              <tbody className=" font-medium">
+              <tbody className="font-medium ">
                 {flightResults.map((flight) => {
                   const duration = timeDifference(
                     flight.arrival_time,
@@ -136,24 +136,24 @@ export const FlightsPage = () => {
 
                   return (
                     <tr
-                      // className=" text-center bg-white"
-                      className="flightRow text-center bg-white hover:bg-gray-100 transform hover:scale-105 transition duration-200 rounded-lg cursor-pointer hover:shadow-xl"
+                      // className="text-center bg-white "
+                      className="text-center transition duration-200 transform bg-white rounded-lg cursor-pointer flightRow hover:bg-gray-100 hover:scale-105 hover:shadow-xl"
                       key={flight.flight_id}
                       title="Click to book this flight"
                       onClick={() => handleFlightClick(flight.flight_id)}
                     >
                       <td className="py-5 rounded-l-lg">{flight.flight_id}</td>
-                      <td className="font-extrabold py-5">
+                      <td className="py-5 font-extrabold">
                         {flight.origin} - {flight.dep_time}
                       </td>
-                      <td className="font-extrabold py-5">{duration}</td>
-                      <td className="font-extrabold py-5">
+                      <td className="py-5 font-extrabold">{duration}</td>
+                      <td className="py-5 font-extrabold">
                         {flight.destination} - {flight.arrival_time}
                       </td>
-                      <td className="font-extrabold py-5">
+                      <td className="py-5 font-extrabold">
                         {flight.seats_left}
                       </td>
-                      <td className="font-extrabold pl-10 rounded-r-lg">
+                      <td className="pl-10 font-extrabold rounded-r-lg">
                         {flight.base_price}
                       </td>
                     </tr>
@@ -163,7 +163,7 @@ export const FlightsPage = () => {
             ) : (
               <tbody>
                 <tr>
-                  <td colSpan="6" className="text-center py-5">
+                  <td colSpan="6" className="py-5 text-center">
                     <p className="text-lg font-semibold text-gray-700">
                       No flights found
                     </p>
@@ -173,12 +173,12 @@ export const FlightsPage = () => {
             )}
           </table>
         </div>
-        {/* <p className="m-16 relative group">
+        {/* <p className="relative m-16 group">
           <span>Hover over me</span>
-          <span className="absolute -bottom-1 left-1/2 w-0 h-2 bg-blue-400 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
-          <span className="absolute -bottom-1 right-1/2 w-0 h-2 bg-blue-400 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
+          <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 left-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
+          <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 right-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
         </p> */}
-        <div className=" w-full h-72 bg-gray-300 mt-40"></div>
+        <div className="w-full mt-40 bg-gray-300  h-72"></div>
       </div>
     </div>
   );
