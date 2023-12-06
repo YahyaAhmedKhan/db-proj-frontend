@@ -41,11 +41,6 @@ export const BookingPage = () => {
   }, [passengerForms]);
 
   useEffect(() => {
-    dispatch(addSeat({ index: 0 }));
-    // console.log("Passenger forms:", passengerForms);
-  }, []);
-
-  useEffect(() => {
     axiosInstance
       .post(`flights/${flightId}`)
       .then((response) => {
@@ -75,13 +70,13 @@ export const BookingPage = () => {
       <div className="flex justify-between w-full">
         <div className="pl-3 pt-3 text-3xl">
           <FontAwesomeIcon icon={faAngleLeft} />
-          <Link className="font-semibold ml-2" to={"/flights"}>
+          <Link className="font-bold ml-2" to={"/flights"}>
             Return to Flights
           </Link>
         </div>
         <div className="pr-3 pt-3 text-3xl">
           <Link
-            className="font-semibold mr-2"
+            className="font-bold mr-2"
             to={`${window.location.pathname}/confirm`}
           >
             Proceed to Confirmations

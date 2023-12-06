@@ -31,8 +31,6 @@ export const BookingForm = ({ index, base_price }) => {
       updatedPassengerDetails[name] = value;
     }
 
-    const price = calculateSeatPrice(passengerDetails, base_price);
-
     console.log("passengerDetails before dispatch:", passengerDetails);
 
     console.log("updatedPassengerDetails:", updatedPassengerDetails);

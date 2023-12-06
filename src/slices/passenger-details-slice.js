@@ -1,7 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ADD_SEAT, REMOVE_SEAT, UPDATE_DETAILS } from "../actions/actionTypes";
 
-const initialState = [];
+const initialState = [
+  {
+    index: 0,
+    passengerDetails: {
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      passportNumber: "",
+      nationality: "",
+      gender: "",
+      seatClass: "",
+      specialNeeds: false,
+      extraBaggage: false,
+    },
+    price: 0,
+  },
+];
 
 const passengerDetailsSlice = createSlice({
   name: "passengerDetails",

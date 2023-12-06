@@ -3,6 +3,8 @@ import { Navbar } from "../navbar";
 import React, { startTransition, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAngleLeft,
+  faAngleRight,
   faCommentDollar,
   faPlane,
   faPlaneArrival,
@@ -38,15 +40,33 @@ export const ConfirmBookingPage = () => {
     extraBaggagePrice: 50.0,
   };
 
-  const passengerDetails = useSelector((state) => state.passengerFormsList);
+  const passengerDetails = useSelector((state) => state.passengerFormList);
   useEffect(() => {
     console.log(passengerDetails);
   });
 
+  function getPathWithoutLastSegment(url) {
+    const parts = url.split("/");
+    parts.pop();
+    return parts.join("/");
+  }
+
+  // Example usage
+  const currentUrl = "http://localhost:3000/booking/EK606/2023-11-17/confirm";
+  const newPath = getPathWithoutLastSegment(currentUrl);
+  console.log(newPath); // Outputs 'http://localhost:3000/booking/EK606/2023-11-17'
+
   return (
     <div className="booking-page flex flex-col items-center justify-center">
       <Navbar></Navbar>
-
+      <div className="flex justify-between w-full">
+        <div className="pl-5 pt-5 text-3xl">
+          <FontAwesomeIcon icon={faAngleLeft} />
+          <Link className="font-bold ml-2" to={getPathWithoutLastSegment(window.location.pathname)}>
+            Return to Booking Page
+          </Link>
+        </div>
+      </div>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl mb-4 font-bold pt-14">
           Review & Confirm your Booking
