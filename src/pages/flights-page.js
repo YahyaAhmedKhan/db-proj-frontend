@@ -62,18 +62,13 @@ export const FlightsPage = () => {
       <Navbar> </Navbar>
       <div className="flex flex-col items-center justify-center">
         <h1 className="mb-4 text-5xl font-bold pt-14">Search for flights</h1>
-        <p
-          className="w-1/2 pb-8 text-lg font-medium text-center "
-          style={{ width: "45%" }}
-        >
-          Search for the flight you want by specifying the origin and
-          destination, and which day you'd like to fly. Then you can select the
-          flight you want and proceed to the booking procedure.
+        <p className="w-1/2 pb-8 text-lg font-medium text-center " style={{ width: "45%" }}>
+          Search for the flight you want by specifying the origin and destination, and which day you'd like to fly. Then you can select the flight you want and proceed to the booking procedure.
         </p>
         <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between ">
           <input
             type="text"
-            // className="w-1/4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            // className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
             placeholder="Select Origin"
             value={origin}
@@ -84,7 +79,7 @@ export const FlightsPage = () => {
           <input
             type="text"
             className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500 "
-            // className="w-1/4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            // className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             placeholder="Select Destination"
             value={destination}
             onChange={(e) => {
@@ -94,7 +89,7 @@ export const FlightsPage = () => {
           <input
             type="date"
             className="w-1/5 pr-4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
-            // className="w-1/5 pr-4 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            // className="w-1/5 pr-4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
@@ -102,7 +97,7 @@ export const FlightsPage = () => {
           />
           <button
             type="button"
-            // className="w-1/5 text-center bg-white  h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
+            // className="w-1/5 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             className="w-1/5 text-center transition transform bg-white cursor-pointer h-1/2 rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 hover:scale-105 duration-50"
             onClick={handleSearch}
           >
@@ -125,10 +120,7 @@ export const FlightsPage = () => {
             {flightResults.length > 0 ? (
               <tbody className="font-medium ">
                 {flightResults.map((flight) => {
-                  const duration = timeDifference(
-                    flight.arrival_time,
-                    flight.dep_time
-                  );
+                  const duration = timeDifference(flight.arrival_time, flight.dep_time);
                   console.log("Duration:", duration);
                   // console.log("arrival time:", flight.arrival_time);
                   console.log(timeDifference("22:15:00", "00:30:00")); // Outputs the time difference
@@ -150,12 +142,8 @@ export const FlightsPage = () => {
                       <td className="py-5 font-extrabold">
                         {flight.destination} - {flight.arrival_time}
                       </td>
-                      <td className="py-5 font-extrabold">
-                        {flight.seats_left}
-                      </td>
-                      <td className="pl-10 font-extrabold rounded-r-lg">
-                        {flight.base_price}
-                      </td>
+                      <td className="py-5 font-extrabold">{flight.seats_left}</td>
+                      <td className="pl-10 font-extrabold rounded-r-lg">${flight.base_price}</td>
                     </tr>
                   );
                 })}
@@ -164,9 +152,7 @@ export const FlightsPage = () => {
               <tbody>
                 <tr>
                   <td colSpan="6" className="py-5 text-center">
-                    <p className="text-lg font-semibold text-gray-700">
-                      No flights found
-                    </p>
+                    <p className="text-lg font-semibold text-gray-700">No flights found</p>
                   </td>
                 </tr>
               </tbody>
@@ -178,7 +164,7 @@ export const FlightsPage = () => {
           <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 left-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
           <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 right-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
         </p> */}
-        <div className="w-full mt-40 bg-gray-300  h-72"></div>
+        <div className="w-full mt-40 bg-gray-300 h-72"></div>
       </div>
     </div>
   );

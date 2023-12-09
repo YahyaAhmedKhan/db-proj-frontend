@@ -1,11 +1,5 @@
 // actions.js
-import {
-  ADD_SEAT,
-  LOGIN,
-  LOGOUT,
-  REMOVE_SEAT,
-  UPDATE_DETAILS,
-} from "./actionTypes";
+import { ADD_SEAT, LOGIN, LOGOUT, REMOVE_SEAT, SET_FLIGHT_DETAILS, UPDATE_DETAILS } from "./actionTypes";
 
 export const loginUser = (userData) => {
   return {
@@ -38,5 +32,12 @@ export const removeSeat = ({ index }) => {
   return {
     type: REMOVE_SEAT,
     payload: { index },
+  };
+};
+
+export const setFlightDetails = ({ flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left }) => {
+  return {
+    type: SET_FLIGHT_DETAILS,
+    payload: { flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left },
   };
 };

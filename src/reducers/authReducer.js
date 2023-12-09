@@ -3,7 +3,9 @@ import { LOGIN, LOGOUT } from "../actions/actionTypes";
 
 const initialState = {
   isLoggedIn: false,
-  user: {},
+  accountId: null,
+  balance: null,
+  email: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -12,13 +14,17 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload,
+        accountId: action.payload.accountId,
+        balance: action.payload.balance,
+        email: action.payload.email,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
-        user: {},
+        accountId: null,
+        balance: null,
+        email: null,
       };
     default:
       return state;

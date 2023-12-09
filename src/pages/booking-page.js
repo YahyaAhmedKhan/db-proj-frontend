@@ -4,18 +4,7 @@ import { Navbar } from "../navbar";
 
 import { useDispatch } from "react-redux";
 
-import {
-  faAngleLeft,
-  faAngleRight,
-  faArrowRight,
-  faCircleMinus,
-  faCirclePlus,
-  faCommentDollar,
-  faMinus,
-  faPlane,
-  faPlaneArrival,
-  faPlaneDeparture,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight, faArrowRight, faCircleMinus, faCirclePlus, faCommentDollar, faMinus, faPlane, faPlaneArrival, faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useMemo, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { BookingForm } from "../components/booking-form";
@@ -61,20 +50,17 @@ export const BookingPage = () => {
   };
 
   return (
-    <div className="booking-page flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center booking-page">
       <Navbar></Navbar>
       <div className="flex justify-between w-full">
-        <div className="pl-5 pt-5 text-3xl">
+        <div className="pt-5 pl-5 text-3xl">
           <FontAwesomeIcon icon={faAngleLeft} />
-          <Link className="font-bold ml-2" to={"/flights"}>
+          <Link className="ml-2 font-bold" to={"/flights"}>
             Return to Flights
           </Link>
         </div>
-        <div className="pr-5 pt-5 text-3xl">
-          <Link
-            className="font-bold mr-2"
-            to={`${window.location.pathname}/confirm`}
-          >
+        <div className="pt-5 pr-5 text-3xl">
+          <Link className="mr-2 font-bold" to={`${window.location.pathname}/confirm`}>
             Proceed to Confirmations
           </Link>
           <FontAwesomeIcon icon={faAngleRight} />
@@ -82,31 +68,21 @@ export const BookingPage = () => {
       </div>
 
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-5xl mb-4 font-bold pt-14">Making your booking</h1>
-        <p className=" w-[45%] text-center text-lg font-medium pb-8">
-          Please select the number of passengers in your booking (max 9) and
-          fill in their respective details.
-        </p>
-        <div className="flight-info-bar h-24 w-screen bg-slate-300 flex justify-center items-center">
+        <h1 className="mb-4 text-5xl font-bold pt-14">Making your booking</h1>
+        <p className=" w-[45%] text-center text-lg font-medium pb-8">Please select the number of passengers in your booking (max 9) and fill in their respective details.</p>
+        <div className="flex items-center justify-center w-screen h-24 flight-info-bar bg-slate-300">
           <div className="flight-info-row font-bold text-lg flex w-[85%] justify-between items-center">
             <div className="flex items-center">
-              <FontAwesomeIcon
-                className=" -rotate-45"
-                icon={faPlane}
-                style={{ color: "#000000" }}
-              />
-              <p className=" ml-1">{flight ? flight.flight_id : null}</p>
+              <FontAwesomeIcon className="-rotate-45 " icon={faPlane} style={{ color: "#000000" }} />
+              <p className="ml-1 ">{flight ? flight.flight_id : null}</p>
             </div>
             <p>{flight ? flight.origin : null}</p>
             <p>{flight ? flight.dep_time : null}</p>
-            <FontAwesomeIcon
-              icon={faPlaneArrival}
-              style={{ color: "#000000" }}
-            />
+            <FontAwesomeIcon icon={faPlaneArrival} style={{ color: "#000000" }} />
             {/* <div className="" >
-              <p className=" text-sm m">{timeDifference(flight.dep_time, flight.arrival_time)}</p>
+              <p className="text-sm  m">{timeDifference(flight.dep_time, flight.arrival_time)}</p>
               <FontAwesomeIcon
-                className=" ml-4"
+                className="ml-4 "
                 icon={faMinus}
                 style={{ color: "#000000", transform: "scaleX(7)" }}
               />
@@ -116,39 +92,22 @@ export const BookingPage = () => {
                 style={{ color: "#000000" }}
               />
             </div> */}
-            <FontAwesomeIcon
-              icon={faPlaneDeparture}
-              style={{ color: "#000000" }}
-            />
+            <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#000000" }} />
             <p>{flight ? flight.arrival_time : null}</p>
             <p>{flight ? flight.destination : null}</p>
-            <div className=" flex select-none">
-              <FontAwesomeIcon
-                onClick={handleMinusClick}
-                className="text-2xl cursor-pointer hover:scale-110 transform transition-transform "
-                icon={faCircleMinus}
-                style={{ color: "#000000" }}
-              />
-              <p className=" px-3">Seats: {seats}</p>
-              <FontAwesomeIcon
-                onClick={handlePlusClick}
-                className="text-2xl hover:text-green-500 cursor-pointer hover:scale-110 transform transition-transform"
-                icon={faCirclePlus}
-                style={{ color: "#000000" }}
-              />
+            <div className="flex select-none ">
+              <FontAwesomeIcon onClick={handleMinusClick} className="text-2xl transition-transform transform cursor-pointer hover:scale-110 " icon={faCircleMinus} style={{ color: "#000000" }} />
+              <p className="px-3 ">Seats: {seats}</p>
+              <FontAwesomeIcon onClick={handlePlusClick} className="text-2xl transition-transform transform cursor-pointer hover:text-green-500 hover:scale-110" icon={faCirclePlus} style={{ color: "#000000" }} />
             </div>
             <p>Total price: ${price}</p>
           </div>
         </div>
 
-        <h1 className=" font-bold text-4xl py-4">Passenger Details</h1>
+        <h1 className="py-4 text-4xl font-bold ">Passenger Details</h1>
 
         {passengerForms.map((_, index) => (
-          <BookingForm
-            key={index}
-            index={index}
-            base_price={flight.base_price}
-          />
+          <BookingForm key={index} index={index} base_price={flight.base_price} />
         ))}
 
         {/* <BookingForm></BookingForm> */}
