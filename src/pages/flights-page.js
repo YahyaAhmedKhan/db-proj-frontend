@@ -3,6 +3,8 @@ import axios from "axios";
 import { Navbar } from "../navbar";
 import { backendURL } from "../constants";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setFlightDetails } from "../actions/actions";
 
 export const FlightsPage = () => {
   const [origin, setOrigin] = useState("Karachi");
@@ -12,7 +14,16 @@ export const FlightsPage = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleFlightClick = (flightId) => {
+    // find flight object from array using flightId
+    const flight = flightResults.find((flight) => flight.flight_id === flightId);
+    const { flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left } = flight;
+
+    // set flight details in redux store
+    dispatch(setFlightDetails({ flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left }));
+
     navigate(`/booking/${flightId}/${date}`);
   };
 
