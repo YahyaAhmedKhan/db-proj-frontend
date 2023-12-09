@@ -5,7 +5,9 @@ import { backendURL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-slice";
-import { formatDate } from "../helper/helper-functions";
+import { formatDate, formatTimeToAMPM } from "../helper/helper-functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 export const FlightsPage = () => {
   const [origin, setOrigin] = useState("");
@@ -132,7 +134,14 @@ export const FlightsPage = () => {
                 <th className="pb-3 font-medium">Flight Duration</th>
                 <th className="pb-3 font-medium">Arrival Details</th>
                 <th className="pb-3 font-medium">Seats Left</th>
-                <th className="pb-3 pl-10 font-medium">Price</th>
+                {/* <th className="pb-3 font-medium">Price</th> */}
+                <th className="relative flex justify-center pb-3 pl-10 font-medium group">
+                  <div>Price</div>
+                  <FontAwesomeIcon className="pt-1 ml-1" icon={faCircleInfo} style={{ color: "#000000" }} />
+                  <div className="absolute opacity-0 left-0 ml-[150px] w-[140px] mb-[30px] px-2 py-1 text-sm text-white bg-black rounded-lg  transform translate-x-[-20px] transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 -bottom-8">
+                    This is the base price per seat
+                  </div>
+                </th>
               </tr>
             </thead>
             {flightResults.length > 0 ? (
@@ -154,11 +163,11 @@ export const FlightsPage = () => {
                     >
                       <td className="py-5 rounded-l-lg">{flight.flight_id}</td>
                       <td className="py-5 font-extrabold">
-                        {flight.origin} - {flight.dep_time}
+                        {flight.origin} - {formatTimeToAMPM(flight.dep_time)}
                       </td>
                       <td className="py-5 font-extrabold">{duration}</td>
                       <td className="py-5 font-extrabold">
-                        {flight.destination} - {flight.arrival_time}
+                        {flight.destination} - {formatTimeToAMPM(flight.arrival_time)}
                       </td>
                       <td className="py-5 font-extrabold">{flight.seats_left}</td>
                       <td className="pl-10 font-extrabold rounded-r-lg">${flight.base_price}</td>

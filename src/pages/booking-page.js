@@ -75,8 +75,8 @@ export const BookingPage = () => {
               <FontAwesomeIcon onClick={handlePlusClick} className="text-2xl transition-transform transform cursor-pointer hover:text-green-500 hover:scale-110" icon={faCirclePlus} style={{ color: "#000000" }} />
             </div>
             <div className="w-[200px] flex justify-between">
-              <p className="">Total price: $</p>
-              <p className="text-right ">{formatPrice(price)}</p>
+              <p className="">Total price:</p>
+              <p className="text-right ">${formatPrice(price)}</p>
             </div>
           </div>
         </div>

@@ -81,8 +81,8 @@ export function Navbar() {
             </div>
             {showDropdown && (
               <div className="absolute right-0 z-10 w-40 mt-2 bg-white border rounded shadow-lg">
-                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance: ${formatPrice(balance)}</p>
-                <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" onClick={handleLogout}>
+                <p className="block px-4 py-2 text-sm hover:bg-gray-100">Balance: ${formatPrice(balance)}</p>
+                <a className="block px-4 py-2 text-sm hover:bg-gray-100" href="#" onClick={handleLogout}>
                   Logout
                 </a>
               </div>
