@@ -10,6 +10,7 @@ const initialState = {
   base_price: null,
   plane_id: null,
   seats_left: null,
+  date: null,
 };
 
 const flightDetailsSlice = createSlice({
@@ -26,6 +27,7 @@ const flightDetailsSlice = createSlice({
       state.base_price = action.payload.base_price;
       state.plane_id = action.payload.plane_id;
       state.seats_left = action.payload.seats_left;
+      state.date = action.payload.date;
     },
     resetFlightDetails: (state = initialState, action) => {
       state.flight_id = null;
@@ -37,6 +39,7 @@ const flightDetailsSlice = createSlice({
       state.base_price = null;
       state.plane_id = null;
       state.seats_left = null;
+      state.date = null;
     },
   },
 });

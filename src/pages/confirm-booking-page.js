@@ -10,23 +10,13 @@ import axiosInstance from "../axiosConfig";
 import { backendURL } from "../constants";
 
 export const ConfirmBookingPage = () => {
-  const flight = {
-    arrival_time: "10:15:00",
-    base_price: "250.00",
-    dep_time: "09:00:00",
-    destination: "Dubai",
-    flight_id: "EK606",
-    flight_record_id: 4,
-    origin: "Karachi",
-    plane_id: 101,
-    seats_left: 100,
-  };
+  const flight = useSelector((state) => state.flightDetails);
 
   // const accountId = 9;
   // const flightRecordId = 4;
 
   const accountId = useSelector((state) => state.auth.accountId);
-  const flightRecordId = useSelector((state) => state.flightRecordId);
+  const flightRecordId = useSelector((state) => state.flightDetails.flight_record_id);
 
   function mapPassengerDetails(passengers) {
     const genderMap = {
@@ -67,8 +57,6 @@ export const ConfirmBookingPage = () => {
   //   );
   // });
 
-  const passengerData = passengerDetailsList[0];
-
   function getPathWithoutLastSegment(url) {
     const parts = url.split("/");
     parts.pop();
@@ -82,17 +70,13 @@ export const ConfirmBookingPage = () => {
     passengerDetails,
   };
 
-  useEffect(() => {
-    console.log("bookingDetails:", bookingDetails);
-  }, [bookingDetails]);
-
   const handleConfirmBooking = async () => {
     const url = "booking/makeBooking";
     console.log(bookingDetails);
 
     try {
       // const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
-      const response = await axiosInstance.post(url, bookingDetails);
+      const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
       if (response.status === 200) {
         console.log("Booking successful");
       } else {
@@ -118,9 +102,11 @@ export const ConfirmBookingPage = () => {
         <h1 className="mb-4 text-5xl font-bold pt-14">Review & Confirm your Booking</h1>
         <p className=" w-[45%] text-center text-lg font-medium pb-8">Review all the passenger details and confirm your booking once you have done so. Press confirm and pay to complete your booking.</p>
         <div className="w-full px-4 py-6 bg-gray-200 flight-info-bar">
-          <div className="flex items-center justify-between">
-            <FontAwesomeIcon icon={faPlane} className="-rotate-45" />
-            <p>{flight.flight_id}</p>
+          <div className="flex items-center justify-between ">
+            <div className="flex">
+              <FontAwesomeIcon icon={faPlane} className="pt-1 mr-4 -rotate-45" />
+              <p>{flight.flight_id}</p>
+            </div>
             <p>{flight.origin}</p>
             <p>{flight.dep_time}</p>
             <FontAwesomeIcon icon={faPlaneDeparture} />
@@ -136,8 +122,8 @@ export const ConfirmBookingPage = () => {
         ))}
 
         <div className="flex justify-end w-full ">
-          <Link className="mt-10" onClick={handleConfirmBooking}>
-            <div className="px-2 py-1 text-xl font-bold border-2 border-black rounded-lg p">Confirm & Pay Now</div>
+          <Link className="mt-10 transition transform bg-white border-[3px] border-black cursor-pointer h-1/2 rounded-xl focus:outline-none hover:bg-blue-1 hover:scale-105 duration-600" onClick={handleConfirmBooking}>
+            <div className="px-2 py-1 text-xl font-bold rounded-lg p">Confirm & Pay Now</div>
           </Link>
         </div>
       </div>
@@ -154,7 +140,7 @@ function formatPrice(price) {
 const seatClassPrice = {
   Economy: formatPrice(250),
   Business: formatPrice(375),
-  FirstClass: formatPrice(500),
+  "first class": formatPrice(500),
 };
 
 const seatClassMap = {
@@ -220,7 +206,7 @@ const PassengerInfoCard = ({ index, passengerDetails, price }) => {
         <div className="flex flex-row ">
           <div className="w-4/12 ">Extra Baggage</div>
           <div className="w-4/12 font-bold text-right ">{extraBaggage ? "Yes" : "No"}</div>
-          <div className="w-4/12 font-semibold text-right ">50.00</div>
+          <div className="w-4/12 font-semibold text-right ">{extraBaggage ? "50.00" : "0.00"}</div>
         </div>
 
         <div className="flex flex-row justify-end ">

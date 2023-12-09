@@ -5,6 +5,8 @@ import { backendURL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-slice";
+import { formatDate } from "../helper/helper-functions";
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 export const FlightsPage = () => {
   const [origin, setOrigin] = useState("Karachi");
@@ -23,12 +25,14 @@ export const FlightsPage = () => {
   const handleFlightClick = (flightId) => {
     // find flight object from array using flightId
     const flight = flightResults.find((flight) => flight.flight_id === flightId);
-    const { flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left } = flight;
+    const { flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left, flight_id } = flight;
 
     // set flight details in redux store
-    dispatch(setFlightDetails({ flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left }));
+    const formattedDate = formatDate(date);
 
-    navigate(`/booking/${flightId}/${date}`);
+    dispatch(setFlightDetails({ flight_record_id, dep_time, arrival_time, origin, destination, base_price, plane_id, seats_left, flight_id, date: formattedDate }));
+
+    navigate(`/booking/${flightId}/${formattedDate}`);
   };
 
   const handleSearch = async () => {

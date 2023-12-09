@@ -4,9 +4,8 @@ import { Navbar } from "../navbar";
 
 import { useDispatch } from "react-redux";
 
-import { faAngleLeft, faAngleRight, faArrowRight, faCircleMinus, faCirclePlus, faCommentDollar, faMinus, faPlane, faPlaneArrival, faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useMemo, useState } from "react";
-import axiosInstance from "../axiosConfig";
+import { faAngleLeft, faAngleRight, faCircleMinus, faCirclePlus, faPlane, faPlaneArrival, faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
+import { useMemo } from "react";
 import { BookingForm } from "../components/booking-form";
 import { addSeat, removeSeat } from "../slices/passenger-details-slice";
 import { useSelector } from "react-redux";
@@ -19,7 +18,6 @@ export const BookingPage = () => {
 
   const seats = useSelector((state) => state.passengerFormList.length);
   const passengerForms = useSelector((state) => state.passengerFormList);
-  // const flightId = useSelector((state) => state.flightDetails.flightId);
   const flight = useSelector((state) => state.flightDetails);
 
   const price = useMemo(() => {
@@ -100,8 +98,6 @@ export const BookingPage = () => {
         {passengerForms.map((_, index) => (
           <BookingForm key={index} index={index} base_price={flight.base_price} />
         ))}
-
-        {/* <BookingForm></BookingForm> */}
       </div>
     </div>
   );
