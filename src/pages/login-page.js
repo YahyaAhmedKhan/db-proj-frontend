@@ -57,7 +57,7 @@ const Login = ({ loginUser }) => {
             {/* <p className="cursor-pointer " onClick={toggleShowPassword}>
               show
             </p> */}
-            <button type="submit" className="py-2 text-white bg-blue-600 border-none button create-account-button">
+            <button type="submit" className="py-2 font-semibold text-white bg-blue-600 border-none rounded-lg button create-account-button">
               Login
             </button>
           </form>
