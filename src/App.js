@@ -6,6 +6,8 @@ import SignUp from "./pages/sign-up-page";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { BookingPage } from "./pages/booking-page";
 import { ConfirmBookingPage } from "./pages/confirm-booking-page";
+import { ThankYouPage } from "./pages/thank-you-page";
+import { ErrorPage } from "./pages/error-page";
 
 function App() {
   return (
@@ -15,10 +17,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/flights" element={<FlightsPage />} />
         <Route path="/booking/:flightId/:date" element={<BookingPage />} />
-        <Route
-          path="/booking/:flightId/:date/confirm"
-          element={<ConfirmBookingPage />}
-        />
+        <Route path="/booking/:flightId/:date/confirm" element={<ConfirmBookingPage />} />
+        <Route path="/booking/complete" element={<ThankYouPage />} />
+        <Route path="/booking/error" element={<ErrorPage />} />
 
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>

@@ -41,16 +41,16 @@ export const BookingPage = () => {
       <Navbar></Navbar>
       <div className="flex justify-between w-full">
         <div className="pt-5 pl-5 text-3xl">
-          <FontAwesomeIcon icon={faAngleLeft} />
-          <Link className="ml-2 font-bold" to={"/flights"}>
-            Return to Flights
+          <Link to={"/flights"} className="relative flex inline-block font-bold group">
+            <FontAwesomeIcon icon={faAngleLeft} className="pt-1 transition-transform duration-300 ease-in-out group-hover:-translate-x-1" />
+            <div className="ml-3">Return to Flights</div>
           </Link>
         </div>
         <div className="pt-5 pr-5 text-3xl">
-          <Link className="mr-2 font-bold" to={`${window.location.pathname}/confirm`}>
-            Proceed to Confirmations
+          <Link to={`${window.location.pathname}/confirm`} className="relative flex inline-block mr-2 font-bold group">
+            <div className="mr-2">Proceed to Confirmations</div>
+            <FontAwesomeIcon icon={faAngleRight} className="pt-1 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
           </Link>
-          <FontAwesomeIcon icon={faAngleRight} />
         </div>
       </div>
 
@@ -74,7 +74,10 @@ export const BookingPage = () => {
               <p className="px-3 ">Seats: {seats}</p>
               <FontAwesomeIcon onClick={handlePlusClick} className="text-2xl transition-transform transform cursor-pointer hover:text-green-500 hover:scale-110" icon={faCirclePlus} style={{ color: "#000000" }} />
             </div>
-            <p>Total price: ${price}</p>
+            <div className="w-[160px] flex justify-between">
+              <p className="">Total price: $</p>
+              <p className="text-right ">{price}</p>
+            </div>
           </div>
         </div>
 

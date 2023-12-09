@@ -3,7 +3,7 @@ import { Navbar } from "../navbar";
 import React, { startTransition, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faPlane, faPlaneArrival, faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
 import axiosInstance from "../axiosConfig";
@@ -12,10 +12,7 @@ import { formatTimeToAMPM } from "../helper/helper-functions";
 
 export const ConfirmBookingPage = () => {
   const flight = useSelector((state) => state.flightDetails);
-
-  // const accountId = 9;
-  // const flightRecordId = 4;
-
+  const navigate = useNavigate();
   const accountId = useSelector((state) => state.auth.accountId);
   const flightRecordId = useSelector((state) => state.flightDetails.flight_record_id);
 
@@ -79,12 +76,14 @@ export const ConfirmBookingPage = () => {
       // const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
       const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
       if (response.status === 200) {
-        console.log("Booking successful");
+        navigate("/booking/complete");
       } else {
         console.error("Error booking flight");
+        navigate("/booking/complete");
       }
     } catch (error) {
       console.error("Network error:", error);
+      navigate("/booking/error");
     }
   };
 

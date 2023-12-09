@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-slice";
 import { formatDate } from "../helper/helper-functions";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 export const FlightsPage = () => {
   const [origin, setOrigin] = useState("Karachi");
@@ -84,7 +83,7 @@ export const FlightsPage = () => {
         <p className="w-1/2 pb-8 text-lg font-medium text-center " style={{ width: "45%" }}>
           Search for the flight you want by specifying the origin and destination, and which day you'd like to fly. Then you can select the flight you want and proceed to the booking procedure.
         </p>
-        <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between ">
+        <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between rounded-xl">
           <input
             type="text"
             // className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
@@ -124,7 +123,7 @@ export const FlightsPage = () => {
           </button>
         </div>
 
-        <div className="flight-results w-3/4 flex flex-col mt-6 bg-gray-200 px-[2%]">
+        <div className="flight-results w-3/4 flex flex-col mt-6 bg-gray-200 px-[2%] rounded-xl">
           <table className="w-full h-full mt-3 mb-5 border-separate flights-table border-spacing-y-3 ">
             <thead>
               <tr className="text-center underline">

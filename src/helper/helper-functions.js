@@ -45,3 +45,7 @@ export function timeDifference(time1, time2) {
 
   return `${hours}hr ${minutes}mins`;
 }
+
+export function formatPrice(price) {
+  return parseFloat(price.toFixed(2)).toFixed(2);
+}

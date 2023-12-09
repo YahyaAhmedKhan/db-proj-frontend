@@ -32,12 +32,17 @@ const SelectField = ({ label, name, options, value, onChange }) => (
     />
   </div>
 );
-
 // CheckboxField Component
 const CheckboxField = ({ label, name, checked, onChange }) => (
   <div className="flex flex-col">
     <label className="mb-1 text-sm font-medium text-gray-600">{label}</label>
-    <input type="checkbox" name={name} checked={checked} onChange={onChange} />
+    <input
+      type="checkbox"
+      name={name}
+      checked={checked}
+      onChange={(e) => onChange(e)}
+      className="w-6 h-6" // Use Tailwind CSS classes to adjust the size
+    />
   </div>
 );
 
@@ -66,8 +71,9 @@ export const BookingForm = ({ index, base_price }) => {
     // Add more countries to the list
   ];
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const updatedPassengerDetails = { ...passengerDetails, [name]: value };
+    const { name, type, checked, value } = e.target;
+    const inputValue = type === "checkbox" ? checked : value;
+    const updatedPassengerDetails = { ...passengerDetails, [name]: inputValue };
     dispatchUpdate(updatedPassengerDetails);
   };
 
@@ -88,7 +94,6 @@ export const BookingForm = ({ index, base_price }) => {
       economy: 1,
       business: 1.5,
       "first class": 2,
-      none: 0,
     };
     return base_price * (seatClassMultiplier[passengerDetails.seatClass] || 0) + extra_charges;
   }
