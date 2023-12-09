@@ -19,6 +19,19 @@ export function Navbar() {
     setShowDropdown(!showDropdown);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   const handleLogout = () => {
@@ -60,7 +73,7 @@ export function Navbar() {
             </Link>
           </>
         ) : (
-          <div className="relative select-none">
+          <div className="relative select-none" ref={dropdownRef}>
             <div className="flex items-center gap-2 px-2 py-1 ml-8 rounded-md cursor-pointer hover:bg-gray-200" onClick={toggleDropdown}>
               <FontAwesomeIcon className="text-xl " icon={faCircleUser} />
               <p className="text-xl font-bold ">{email}</p>
@@ -68,9 +81,7 @@ export function Navbar() {
             </div>
             {showDropdown && (
               <div className="absolute right-0 z-10 w-40 mt-2 bg-white border rounded shadow-lg">
-                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
-                  Balance: ${formatPrice(balance)}
-                </p>
+                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Balance: ${formatPrice(balance)}</p>
                 <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" onClick={handleLogout}>
                   Logout
                 </a>
