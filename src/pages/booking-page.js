@@ -9,11 +9,9 @@ import { useMemo } from "react";
 import { BookingForm } from "../components/booking-form";
 import { addSeat, removeSeat } from "../slices/passenger-details-slice";
 import { useSelector } from "react-redux";
+import { formatTimeToAMPM } from "../helper/helper-functions";
 
 export const BookingPage = () => {
-  // const { flightId, date } = useParams();
-  // const [flight, setFlight] = useState({});
-
   const dispatch = useDispatch();
 
   const seats = useSelector((state) => state.passengerFormList.length);
@@ -61,28 +59,15 @@ export const BookingPage = () => {
         <p className=" w-[45%] text-center text-lg font-medium pb-8">Please select the number of passengers in your booking (max 9) and fill in their respective details.</p>
         <div className="flex items-center justify-center w-screen h-24 flight-info-bar bg-slate-300">
           <div className="flight-info-row font-bold text-lg flex w-[85%] justify-between items-center">
-            <div className="flex items-center">
+            <div className="flex items-center font-medium">
               <FontAwesomeIcon className="-rotate-45 " icon={faPlane} style={{ color: "#000000" }} />
               <p className="ml-1 ">{flight ? flight.flight_id : null}</p>
             </div>
             <p>{flight ? flight.origin : null}</p>
-            <p>{flight ? flight.dep_time : null}</p>
+            <p>{flight ? formatTimeToAMPM(flight.dep_time) : null}</p>
             <FontAwesomeIcon icon={faPlaneArrival} style={{ color: "#000000" }} />
-            {/* <div className="" >
-              <p className="text-sm m">{timeDifference(flight.dep_time, flight.arrival_time)}</p>
-              <FontAwesomeIcon
-                className="ml-4 "
-                icon={faMinus}
-                style={{ color: "#000000", transform: "scaleX(7)" }}
-              />
-              <FontAwesomeIcon
-                className=" ml-7"
-                icon={faArrowRight}
-                style={{ color: "#000000" }}
-              />
-            </div> */}
             <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#000000" }} />
-            <p>{flight ? flight.arrival_time : null}</p>
+            <p>{flight ? formatTimeToAMPM(flight.arrival_time) : null}</p>
             <p>{flight ? flight.destination : null}</p>
             <div className="flex select-none ">
               <FontAwesomeIcon onClick={handleMinusClick} className="text-2xl transition-transform transform cursor-pointer hover:scale-110 " icon={faCircleMinus} style={{ color: "#000000" }} />
@@ -102,24 +87,3 @@ export const BookingPage = () => {
     </div>
   );
 };
-
-function timeDifference(time1, time2) {
-  // Function to convert time string to minutes
-  function timeToMinutes(time) {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
-  }
-
-  // Convert both times to minutes
-  const minutes1 = timeToMinutes(time1);
-  const minutes2 = timeToMinutes(time2);
-
-  // Calculate the difference in minutes
-  let diff = Math.abs(minutes2 - minutes1);
-
-  // Convert the difference back to hours and minutes
-  const hours = Math.floor(diff / 60);
-  const minutes = diff % 60;
-
-  return `${hours}hr ${minutes}mins`;
-}

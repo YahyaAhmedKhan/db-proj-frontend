@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "axios";
 import axiosInstance from "../axiosConfig";
 import { backendURL } from "../constants";
+import { formatTimeToAMPM } from "../helper/helper-functions";
 
 export const ConfirmBookingPage = () => {
   const flight = useSelector((state) => state.flightDetails);
@@ -102,16 +103,16 @@ export const ConfirmBookingPage = () => {
         <h1 className="mb-4 text-5xl font-bold pt-14">Review & Confirm your Booking</h1>
         <p className=" w-[45%] text-center text-lg font-medium pb-8">Review all the passenger details and confirm your booking once you have done so. Press confirm and pay to complete your booking.</p>
         <div className="w-full px-4 py-6 bg-gray-200 flight-info-bar">
-          <div className="flex items-center justify-between ">
-            <div className="flex">
+          <div className="flex items-center justify-between px-6 font-bold">
+            <div className="flex font-medium">
               <FontAwesomeIcon icon={faPlane} className="pt-1 mr-4 -rotate-45" />
               <p>{flight.flight_id}</p>
             </div>
             <p>{flight.origin}</p>
-            <p>{flight.dep_time}</p>
+            <p>{formatTimeToAMPM(flight.dep_time)}</p>
             <FontAwesomeIcon icon={faPlaneDeparture} />
             <FontAwesomeIcon icon={faPlaneArrival} />
-            <p>{flight.arrival_time}</p>
+            <p>{formatTimeToAMPM(flight.arrival_time)}</p>
             <p>{flight.destination}</p>
             <p>{flight.date}</p>
           </div>
