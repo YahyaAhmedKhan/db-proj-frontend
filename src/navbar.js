@@ -1,7 +1,7 @@
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "./actions/actionTypes";
@@ -19,16 +19,12 @@ export function Navbar() {
     setShowDropdown(!showDropdown);
   };
 
-  useEffect(() => {
-    // console.log("isLoggedIn:", isLoggedIn);
-    // console.log("user:", user);
-  }, [isLoggedIn]);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   const handleLogout = () => {
     // console.log("Logging out...");
     Cookies.remove("jwtToken", { path: "/" });
     dispatch({ type: LOGOUT });
-    // logoutUser(); // Dispatch the logout action to the Redux store
   };
 
   return (
@@ -64,12 +60,22 @@ export function Navbar() {
             </Link>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-between gap-2 px-2 py-1 ml-8 rounded-md hover:bg-gray-200 hover:cursor-pointer" onClick={handleLogout}>
-            <div className="flex items-center gap-2">
+          <div className="relative select-none">
+            <div className="flex items-center gap-2 px-2 py-1 ml-8 rounded-md cursor-pointer hover:bg-gray-200" onClick={toggleDropdown}>
               <FontAwesomeIcon className="text-xl " icon={faCircleUser} />
-              <p className="text-xl font-bold ">{email} </p> <FontAwesomeIcon className="" icon={faCaretDown} />
+              <p className="text-xl font-bold ">{email}</p>
+              <FontAwesomeIcon icon={faCaretDown} />
             </div>
-            {/* <p>${formatPrice(balance)} </p> */}
+            {showDropdown && (
+              <div className="absolute right-0 z-10 w-40 mt-2 bg-white border rounded shadow-lg">
+                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">
+                  Balance: ${formatPrice(balance)}
+                </p>
+                <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" onClick={handleLogout}>
+                  Logout
+                </a>
+              </div>
+            )}
           </div>
         )}
       </div>
