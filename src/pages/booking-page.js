@@ -12,30 +12,21 @@ import { addSeat, removeSeat } from "../slices/passenger-details-slice";
 import { useSelector } from "react-redux";
 
 export const BookingPage = () => {
-  const { flightId, date } = useParams();
-  const [flight, setFlight] = useState({});
+  // const { flightId, date } = useParams();
+  // const [flight, setFlight] = useState({});
+
   const dispatch = useDispatch();
 
   const seats = useSelector((state) => state.passengerFormList.length);
   const passengerForms = useSelector((state) => state.passengerFormList);
+  // const flightId = useSelector((state) => state.flightDetails.flightId);
+  const flight = useSelector((state) => state.flightDetails);
 
   const price = useMemo(() => {
     return passengerForms.reduce((acc, curr) => {
       return acc + curr.price;
     }, 0);
   }, [passengerForms]);
-
-  useEffect(() => {
-    axiosInstance
-      .post(`flights/${flightId}`)
-      .then((response) => {
-        const flightData = response.data;
-        setFlight(flightData[0]); // Set flight details in state
-      })
-      .catch((error) => {
-        console.error("Error fetching flight details:", error);
-      });
-  }, [flightId]);
 
   const handleMinusClick = () => {
     if (seats > 1) {
@@ -80,7 +71,7 @@ export const BookingPage = () => {
             <p>{flight ? flight.dep_time : null}</p>
             <FontAwesomeIcon icon={faPlaneArrival} style={{ color: "#000000" }} />
             {/* <div className="" >
-              <p className="text-sm  m">{timeDifference(flight.dep_time, flight.arrival_time)}</p>
+              <p className="text-sm m">{timeDifference(flight.dep_time, flight.arrival_time)}</p>
               <FontAwesomeIcon
                 className="ml-4 "
                 icon={faMinus}

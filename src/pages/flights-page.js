@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navbar } from "../navbar";
 import { backendURL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setFlightDetails } from "../actions/actions";
+import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-slice";
 
 export const FlightsPage = () => {
   const [origin, setOrigin] = useState("Karachi");
@@ -15,6 +15,10 @@ export const FlightsPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetFlightDetails({}));
+  }, []);
 
   const handleFlightClick = (flightId) => {
     // find flight object from array using flightId

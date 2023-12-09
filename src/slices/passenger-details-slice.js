@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ADD_SEAT, REMOVE_SEAT, UPDATE_DETAILS } from "../actions/actionTypes";
 
 const initialState = [
   {

@@ -16,7 +16,7 @@ const flightDetailsSlice = createSlice({
   name: "flightDetails",
   initialState,
   reducers: {
-    setFlightDetails: (state, action) => {
+    setFlightDetails: (state = initialState, action) => {
       state.flight_id = action.payload.flight_id;
       state.flight_record_id = action.payload.flight_record_id;
       state.dep_time = action.payload.dep_time;
@@ -27,8 +27,19 @@ const flightDetailsSlice = createSlice({
       state.plane_id = action.payload.plane_id;
       state.seats_left = action.payload.seats_left;
     },
+    resetFlightDetails: (state = initialState, action) => {
+      state.flight_id = null;
+      state.flight_record_id = null;
+      state.dep_time = null;
+      state.arrival_time = null;
+      state.origin = null;
+      state.destination = null;
+      state.base_price = null;
+      state.plane_id = null;
+      state.seats_left = null;
+    },
   },
 });
 
-export const { setFlightDetails } = flightDetailsSlice.actions;
+export const { setFlightDetails, resetFlightDetails } = flightDetailsSlice.actions;
 export const flightDetailsReducer = flightDetailsSlice.reducer;
