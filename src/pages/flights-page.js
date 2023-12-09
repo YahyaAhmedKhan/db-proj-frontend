@@ -8,8 +8,8 @@ import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-s
 import { formatDate } from "../helper/helper-functions";
 
 export const FlightsPage = () => {
-  const [origin, setOrigin] = useState("Karachi");
-  const [destination, setDestination] = useState("Dubai");
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
   const [date, setDate] = useState("");
   const [flightResults, setFlightResults] = useState([]);
 

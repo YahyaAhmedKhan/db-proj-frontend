@@ -8,6 +8,7 @@ import { BookingPage } from "./pages/booking-page";
 import { ConfirmBookingPage } from "./pages/confirm-booking-page";
 import { ThankYouPage } from "./pages/thank-you-page";
 import { ErrorPage } from "./pages/error-page";
+import { AccountCreatedPage } from "./pages/account-created-page";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/booking/:flightId/:date/confirm" element={<ConfirmBookingPage />} />
         <Route path="/booking/complete" element={<ThankYouPage />} />
         <Route path="/booking/error" element={<ErrorPage />} />
+        <Route path="/signup/success" element={<AccountCreatedPage />} />
 
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>

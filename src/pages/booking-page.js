@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import { BookingForm } from "../components/booking-form";
 import { addSeat, removeSeat } from "../slices/passenger-details-slice";
 import { useSelector } from "react-redux";
-import { formatTimeToAMPM } from "../helper/helper-functions";
+import { formatPrice, formatTimeToAMPM } from "../helper/helper-functions";
 
 export const BookingPage = () => {
   const dispatch = useDispatch();
@@ -74,9 +74,9 @@ export const BookingPage = () => {
               <p className="px-3 ">Seats: {seats}</p>
               <FontAwesomeIcon onClick={handlePlusClick} className="text-2xl transition-transform transform cursor-pointer hover:text-green-500 hover:scale-110" icon={faCirclePlus} style={{ color: "#000000" }} />
             </div>
-            <div className="w-[160px] flex justify-between">
+            <div className="w-[200px] flex justify-between">
               <p className="">Total price: $</p>
-              <p className="text-right ">{price}</p>
+              <p className="text-right ">{formatPrice(price)}</p>
             </div>
           </div>
         </div>

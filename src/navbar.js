@@ -1,15 +1,23 @@
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "./actions/actionTypes";
+import { formatPrice } from "./helper/helper-functions";
 
 export function Navbar() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const email = useSelector((state) => state.auth.email);
+  const balance = useSelector((state) => state.auth.balance);
   const dispatch = useDispatch();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   useEffect(() => {
     // console.log("isLoggedIn:", isLoggedIn);
@@ -56,10 +64,12 @@ export function Navbar() {
             </Link>
           </>
         ) : (
-          <div className="flex flex-row items-center justify-between gap-2 px-2 py-1 ml-8 rounded-md hover:bg-gray-200 hover:cursor-pointer" onClick={handleLogout}>
-            <FontAwesomeIcon className="" icon={faCaretDown} />
-            <FontAwesomeIcon icon={faCircleUser} />
-            <p className="text-xl font-bold ">{email} </p>{" "}
+          <div className="flex flex-col items-center justify-between gap-2 px-2 py-1 ml-8 rounded-md hover:bg-gray-200 hover:cursor-pointer" onClick={handleLogout}>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon className="text-xl " icon={faCircleUser} />
+              <p className="text-xl font-bold ">{email} </p> <FontAwesomeIcon className="" icon={faCaretDown} />
+            </div>
+            {/* <p>${formatPrice(balance)} </p> */}
           </div>
         )}
       </div>
