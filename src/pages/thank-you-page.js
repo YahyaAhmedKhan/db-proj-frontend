@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "../navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export const ThankYouPage = () => {
   return (

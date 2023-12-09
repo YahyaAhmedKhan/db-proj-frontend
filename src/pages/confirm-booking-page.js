@@ -9,10 +9,12 @@ import { Axios } from "axios";
 import axiosInstance from "../axiosConfig";
 import { backendURL } from "../constants";
 import { formatTimeToAMPM } from "../helper/helper-functions";
+import { UPDATE_BALANCE } from "../actions/actionTypes";
 
 export const ConfirmBookingPage = () => {
-  const flight = useSelector((state) => state.flightDetails);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const flight = useSelector((state) => state.flightDetails);
   const accountId = useSelector((state) => state.auth.accountId);
   const flightRecordId = useSelector((state) => state.flightDetails.flight_record_id);
 
@@ -46,15 +48,6 @@ export const ConfirmBookingPage = () => {
 
   const passengerDetailsList = useSelector((state) => state.passengerFormList);
 
-  // useEffect(() => {
-  //   console.log("before formatting passenger details:", passengerDetailsList);
-
-  //   console.log(
-  //     "formatted passenger details:",
-  //     mapPassengerDetails(passengerDetailsList)
-  //   );
-  // });
-
   function getPathWithoutLastSegment(url) {
     const parts = url.split("/");
     parts.pop();
@@ -73,7 +66,6 @@ export const ConfirmBookingPage = () => {
     console.log(bookingDetails);
 
     try {
-      // const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
       const response = await axiosInstance.post(`${backendURL}booking/makeBooking`, bookingDetails);
       if (response.status === 200) {
         navigate("/booking/complete");

@@ -54,9 +54,6 @@ const Login = ({ loginUser }) => {
             </h2>
             <input type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-2 mb-4 border border-gray-300 rounded-md" />
             <input type={showPassword ? "text" : "password"} placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} className="p-2 mb-4 border border-gray-300 rounded-md" />
-            {/* <p className="cursor-pointer " onClick={toggleShowPassword}>
-              show
-            </p> */}
             <button type="submit" className="py-2 font-semibold text-white bg-blue-600 border-none rounded-lg button create-account-button">
               Login
             </button>
@@ -69,7 +66,7 @@ const Login = ({ loginUser }) => {
 
 // // Map Redux state to component props
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.auth.isLoggedIn, // This is probably not needed in this component anymore
+  isLoggedIn: state.auth.isLoggedIn,
 });
 
 // Map Redux actions to component props

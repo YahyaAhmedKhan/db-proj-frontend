@@ -5,7 +5,7 @@ import { backendURL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetFlightDetails, setFlightDetails } from "../slices/flight-details-slice";
-import { formatDate, formatTimeToAMPM } from "../helper/helper-functions";
+import { formatDate, formatTimeToAMPM, timeDifference } from "../helper/helper-functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
@@ -88,7 +88,6 @@ export const FlightsPage = () => {
         <div className="flex w-3/4 h-24 mt-6 bg-gray-200 items-center px-[2%] justify-between rounded-xl">
           <input
             type="text"
-            // className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
             placeholder="Select Origin"
             value={origin}
@@ -99,7 +98,6 @@ export const FlightsPage = () => {
           <input
             type="text"
             className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500 "
-            // className="w-1/4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             placeholder="Select Destination"
             value={destination}
             onChange={(e) => {
@@ -109,18 +107,12 @@ export const FlightsPage = () => {
           <input
             type="date"
             className="w-1/5 pr-4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500 hover:border hover:border-blue-500"
-            // className="w-1/5 pr-4 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
             }}
           />
-          <button
-            type="button"
-            // className="w-1/5 text-center bg-white h-1/2 rounded-xl focus:outline-none focus:border focus:border-blue-500"
-            className="w-1/5 text-center transition transform bg-white cursor-pointer h-1/2 rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 hover:scale-105 duration-50"
-            onClick={handleSearch}
-          >
+          <button type="button" className="w-1/5 text-center transition transform bg-white cursor-pointer h-1/2 rounded-xl focus:outline-none hover:border hover:border-blue-500 hover:bg-blue-1 hover:scale-105 duration-50" onClick={handleSearch}>
             Search
           </button>
         </div>
@@ -134,7 +126,6 @@ export const FlightsPage = () => {
                 <th className="pb-3 font-medium">Flight Duration</th>
                 <th className="pb-3 font-medium">Arrival Details</th>
                 <th className="pb-3 font-medium">Seats Left</th>
-                {/* <th className="pb-3 font-medium">Price</th> */}
                 <th className="relative flex justify-center pb-3 pl-10 font-medium group">
                   <div>Price</div>
                   <FontAwesomeIcon className="pt-1 ml-1" icon={faCircleInfo} style={{ color: "#000000" }} />
@@ -149,13 +140,11 @@ export const FlightsPage = () => {
                 {flightResults.map((flight) => {
                   const duration = timeDifference(flight.arrival_time, flight.dep_time);
                   console.log("Duration:", duration);
-                  // console.log("arrival time:", flight.arrival_time);
                   console.log(timeDifference("22:15:00", "00:30:00")); // Outputs the time difference
                   console.log(flight.arrival_time);
 
                   return (
                     <tr
-                      // className="text-center bg-white "
                       className="text-center transition duration-200 transform bg-white rounded-lg cursor-pointer flightRow hover:bg-gray-100 hover:scale-105 hover:shadow-xl"
                       key={flight.flight_id}
                       title="Click to book this flight"
@@ -186,34 +175,8 @@ export const FlightsPage = () => {
             )}
           </table>
         </div>
-        {/* <p className="relative m-16 group">
-          <span>Hover over me</span>
-          <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 left-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
-          <span className="absolute w-0 h-2 bg-blue-400 -bottom-1 right-1/2 group-hover:w-1/2 group-hover:h-1 group-hover:transition-all"></span>
-        </p> */}
         <div className="w-full mt-40 bg-gray-300 h-72"></div>
       </div>
     </div>
   );
 };
-
-function timeDifference(time1, time2) {
-  // Function to convert time string to minutes
-  function timeToMinutes(time) {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
-  }
-
-  // Convert both times to minutes
-  const minutes1 = timeToMinutes(time1);
-  const minutes2 = timeToMinutes(time2);
-
-  // Calculate the difference in minutes
-  let diff = Math.abs(minutes2 - minutes1);
-
-  // Convert the difference back to hours and minutes
-  const hours = Math.floor(diff / 60);
-  const minutes = diff % 60;
-
-  return `${hours}hr ${minutes}mins`;
-}

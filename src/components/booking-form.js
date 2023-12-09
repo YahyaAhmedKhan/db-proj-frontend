@@ -70,6 +70,7 @@ export const BookingForm = ({ index, base_price }) => {
     { label: "United Kingdom", value: "United Kingdom" },
     // Add more countries to the list
   ];
+
   const handleInputChange = (e) => {
     const { name, type, checked, value } = e.target;
     const inputValue = type === "checkbox" ? checked : value;

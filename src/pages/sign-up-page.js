@@ -31,24 +31,25 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // if (isValidConfirmPassword(email, confirmPassword) && isValidEmail(email) && isValidPassword(password)) {
-    try {
-      const response = await axios.post(`${backendURL}accounts`, {
-        email: email,
-        password: password,
-      });
+    if (isValidConfirmPassword(password, confirmPassword) && isValidEmail(email) && isValidPassword(password)) {
+      console.log(1);
+      try {
+        const response = await axios.post(`${backendURL}accounts`, {
+          email: email,
+          password: password,
+        });
 
-      if (response.status === 200) {
-        navigate("/signup/success");
-      } else {
-        console.error("Signup failed: ", response);
+        if (response.status === 200) {
+          navigate("/signup/success");
+        } else {
+          console.error("Signup failed: ", response);
+          setCreateAccountError(true);
+        }
+      } catch (error) {
+        console.error("An error occurred during signup: ", error);
         setCreateAccountError(true);
       }
-    } catch (error) {
-      console.error("An error occurred during signup: ", error);
-      setCreateAccountError(true);
     }
-    // }
   };
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;

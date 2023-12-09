@@ -26,6 +26,7 @@ export const authReducer = (state = initialState, action) => {
         balance: null,
         email: null,
       };
+
     default:
       return state;
   }

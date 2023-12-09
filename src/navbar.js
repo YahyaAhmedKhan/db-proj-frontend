@@ -35,7 +35,6 @@ export function Navbar() {
   const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   const handleLogout = () => {
-    // console.log("Logging out...");
     Cookies.remove("jwtToken", { path: "/" });
     dispatch({ type: LOGOUT });
   };
